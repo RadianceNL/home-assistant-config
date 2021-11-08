@@ -1,0 +1,4 @@
+title: Stroomverbruik
+icon: mdi:flash
+cards:
+  - !include /config/views/cards/energie/energieverbruik-card.yaml

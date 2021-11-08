@@ -1,0 +1,193 @@
+##########################################################################################
+# Home assistant                                                                         #
+##########################################################################################
+homeassistant:
+  name: Thuis
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: 0
+  unit_system: metric
+  time_zone: Europe/Amsterdam
+  customize: !include customize.yaml
+  external_url: !secret external_url
+  internal_url: !secret internal_url
+
+energy:
+my:
+
+##########################################################################################
+# Default configuration settings                                                         #
+##########################################################################################
+frontend: # Enables the frontend
+  themes: !include_dir_merge_named themes
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.30.33.0/24
+
+config: # Enables configuration UI
+updater: #Checks for available updates
+discovery: # Discover some devices automatically
+history: # Enables support for tracking state changes over time
+logbook: # View all events in a logbook
+map: # Enables a map showing the location of tracked devices
+sun: # Track the sun
+wake_on_lan:
+hassio:
+lovelace:
+  mode: yaml
+  resources: !include /config/resources.yaml
+system_health:
+mobile_app:
+api:
+
+# Includes
+group: !include groups.yaml
+script: !include scripts.yaml
+switch: !include switches.yaml
+google_assistant: !include google_assistant.yaml
+camera: !include cameras.yaml
+sensor: !include sensors.yaml
+automation: !include automations.yaml
+light: !include lights.yaml
+#resources: !include resources.yaml
+input_number: !include input_number.yaml
+
+##########################################################################################
+# Octoprint                                                                              #
+##########################################################################################
+octoprint:
+  host: !secret octoprint_ip
+  api_key: !secret octoprint_api_key
+  bed: true
+  number_of_tools: 2
+
+##########################################################################################
+# Media players                                                                          #
+##########################################################################################
+media_player:
+  # Onkyo TX NR-616 versterker
+  - platform: onkyo
+    name: Onkyo
+    host: !secret onkyo_ip
+    sources:
+      bd-dvd: "Kodi"
+      video2: "Ziggo"
+      video6: "PC"
+      video3: "Xbox"
+
+##########################################################################################
+# Sensors                                                                                #
+##########################################################################################
+binary_sensor:
+  - platform: octoprint
+    monitored_conditions:
+      - Printing
+      - Printing Error
+
+# Log settings
+logger:
+  default: error
+
+# Weer
+weather:
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    mode: daily
+
+input_boolean:
+  prusa_off_when_finished:
+    name: Prusa uit als print klaar is
+    initial: off
+    icon: mdi:printer-3d-nozzle
+  eliane:
+    name: Eliane
+    initial: on
+  jeroen:
+    name: Jeroen
+    initial: on
+
+mqtt:
+  broker: core-mosquitto # This will have to be your mqtt broker, Mosquitto addon is recommended.
+  discovery: true
+
+spotify:
+  client_id: !secret spotify_client_id
+  client_secret: !secret spotify_client_secret
+
+influxdb:
+  host: !secret influxdb_ip
+  port: !secret influxdb_port
+  database: !secret influxdb_database
+  username: !secret influxdb_username
+  password: !secret influxdb_password
+  max_retries: 3
+  default_measurement: state
+
+recorder:
+  purge_keep_days: 14
+  db_url: !secret recorder_db_url
+  include:
+    domains:
+      - sensor
+      - binary_sensor
+      - light
+      - media_player
+      - switch
+    entities:
+      - sensor.energy_consumption_tarif_1
+      - sensor.energy_consumption_tarif_1_cost
+      - sensor.energy_consumption_tarif_2
+      - sensor.energy_consumption_tarif_2_cost
+      - sensor.dsmr_consumption_gas_delivered
+      - sensor.dsmr_consumption_gas_delivered_cost
+      - sensor.woonkamer_temperatuursensor_humidity
+      - sensor.woonkamer_temperatuursensor_pressure
+      - sensor.woonkamer_temperatuursensor_temperature
+
+webostv:
+  host: !secret webos_ip
+  name: Woonkamer TV
+  turn_on_action:
+    service: wake_on_lan.send_magic_packet
+    data:
+      mac: !secret webos_mac_address
+      broadcast_address: !secret webos_ip
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_api_key
+    allowed_chat_ids:
+      - !secret telegram_chat_id
+
+notify:
+  - platform: telegram
+    name: !secret telegram_bot_name
+    chat_id: !secret telegram_chat_id
+
+utility_meter:
+  daily_energy_offpeak:
+    source: sensor.energy_consumption_tarif_1
+    name: Daily Energy (Offpeak)
+    cycle: daily
+  daily_energy_peak:
+    source: sensor.energy_consumption_tarif_2
+    name: Daily Energy (Peak)
+    cycle: daily
+  daily_gas:
+    source: sensor.gas_consumption
+    name: Daily Gas
+    cycle: daily
+  monthly_energy_offpeak:
+    source: sensor.energy_consumption_tarif_1
+    name: Monthly Energy (Offpeak)
+    cycle: monthly
+  monthly_energy_peak:
+    source: sensor.energy_consumption_tarif_2
+    name: Monthly Energy (Peak)
+    cycle: monthly
+  monthly_gas:
+    source: sensor.gas_consumption
+    name: Monthly Gas
+    cycle: monthly

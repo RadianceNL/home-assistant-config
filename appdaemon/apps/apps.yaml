@@ -1,0 +1,27 @@
+slaapkamer_switch_x:
+  module: controllerx
+  class: E1743Controller
+  controller: sensor.slaapkamer_switch_click
+  integration: z2m
+  light: light.slaapkamer_spots_2
+
+eetkamer_switch_x:
+  module: controllerx
+  class: E1743Controller
+  controller: sensor.eetkamer_switch_click
+  integration: z2m
+  light: light.eetkamer_verlichting
+
+badkamer_switch_x:
+  module: controllerx
+  class: E1743Controller
+  controller: sensor.badkamer_switch_click
+  integration: z2m
+  light: light.badkamerverlichting
+
+keuken_switch_x:
+  module: controllerx
+  class: E1743Controller
+  controller: sensor.keuken_switch_click
+  integration: z2m
+  light: group.keukenverlichting

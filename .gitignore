@@ -1,0 +1,11 @@
+secrets.yaml
+deprecated
+esphome
+image
+node-red
+webostv.conf
+HomeAssistant*
+home-assistant*
+google_assistant.yaml
+.storage
+.vscode

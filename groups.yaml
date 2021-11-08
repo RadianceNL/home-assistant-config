@@ -1,0 +1,81 @@
+# LED Strips woonkamer
+led_strips:
+  name: LED Strips
+  entities:
+    #  - light.wled_tv_backlight
+    - light.wled_bank
+    - light.wled_computerkast
+    - light.wled_werkbank
+    - light.wled_dj_booth
+    - light.wled_schouw
+    - light.wled_woonkamer
+    - light.wled_werkbank_laag
+#    - light.wled_werkbank_pegboard_1
+#    - light.wled_werkbank_plank
+#    - light.wled_prusa_enclosure
+#    - light.wled_prusa_enclosure_bottom
+    - light.wled_lithophane
+
+zigbee_woonkamer_verlichting:
+  name: Zigbee woonkamer verlichting
+  entities:
+    - light.hongkong_spot_1
+    - light.hongkong_spot_2
+    - light.hongkong_spot_3
+
+# Slaapkamer verlichting
+slaapkamer_spots:
+  name: Slaapkamer Spots
+  entities:
+    - light.slaapkamer_spot_1
+    - light.slaapkamer_spot_2
+    - light.slaapkamer_spot_3
+
+slaapkamer_verlichting:
+  name: Slaapkamer verlichting
+  entities:
+    - group.slaapkamer_spots
+
+# Keukenverlichting
+keukenverlichting:
+  name: Keukenverlichting
+  entities:
+    - light.aanrecht_verlichting
+    - light.gasfornuis_verlichting
+
+# Entertainment
+entertainment:
+  name: Entertainment
+  entities:
+    - switch.geluid
+
+# Werkbank
+werkbank:
+  name: Werkbank
+  entities:
+    - light.wled_werkbank_pegboard_1
+    - light.wled_werkbank_laag
+    - light.wled_werkbank_plank
+
+prusa_mks3:
+  name: Prusa MKS3+
+  entities:
+    - switch.prusa_socket
+    - sensor.octoprint_current_state
+    - sensor.octoprint_job_percentage
+    - sensor.octoprint_actual_bed_temp
+    - sensor.octoprint_actual_tool0_temp
+    - sensor.octoprint_target_bed_temp
+    - sensor.octoprint_target_tool0_temp
+
+#Woonkamer verlichting
+woonkamer_verlichting:
+  name: Woonkamer verlichting
+  entities:
+    - group.led_strips
+    - group.zigbee_woonkamer_verlichting
+
+persons:
+  entities:
+    - person.eliane
+    - person.jeroen

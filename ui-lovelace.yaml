@@ -1,0 +1,6 @@
+title: Home
+views:
+  - !include /config/views/main-view.yaml
+  - !include /config/views/network-view.yaml
+  - !include /config/views/energie-view.yaml
+  - !include /config/views/test-view.yaml

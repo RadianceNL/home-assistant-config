@@ -1,0 +1,681 @@
+- platform: octoprint
+  name: OctoPrint
+  monitored_conditions:
+    - Current State
+    - Temperatures
+    - Job Percentage
+
+#############################################################################
+#                          Netdata                                          #
+#############################################################################
+- platform: netdata
+  host: 192.168.1.4
+  port: 19999
+  name: Netdata
+  resources:
+    proxmox_cpu_temperatuur:
+      data_group: sensors.coretemp-isa-0000_temperature
+      element: coretemp-isa-0000_temp1
+    proxmox_cpu_load:
+      data_group: system.cpu
+      element: idle
+    proxmox_ram_used:
+      data_group: system.ram
+      element: used
+    proxmox_ram_free:
+      data_group: system.ram
+      element: free
+    proxmox_network_out:
+      data_group: system.net
+      element: OutOctets
+      invert: true
+    proxmox_network_in:
+      data_group: system.net
+      element: InOctets
+    proxmox_uptime:
+      data_group: system.uptime
+      element: uptime
+
+    # Disk Health Disk 1
+    disk1_space_available:
+      data_group: disk_space._mnt_disk1
+      element: avail
+    disk1_space_used:
+      data_group: disk_space._mnt_disk1
+      element: used
+    disk1_smart_temperature:
+      data_group: smartd_log_local.temperature_celsius
+      element: WDC_WD80EDAZ_11TA3A0-VDHP65KK_194
+    disk1_reallocated_sector_count:
+      data_group: smartd_log_local.reallocated_sectors_count
+      element: WDC_WD80EDAZ_11TA3A0-VDHP65KK_5
+    disk1_uncorrectable_sector_count:
+      data_group: smartd_log_local.offline_uncorrectable_sector_count
+      element: WDC_WD80EDAZ_11TA3A0-VDHP65KK_198
+    disk1_current_pending_sector_count:
+      data_group: smartd_log_local.current_pending_sector_count
+      element: WDC_WD80EDAZ_11TA3A0-VDHP65KK_197
+
+    # Disk Health Disk 2
+    disk2_space_available:
+      data_group: disk_space._mnt_disk2
+      element: avail
+    disk2_space_used:
+      data_group: disk_space._mnt_disk2
+      element: used
+    disk2_smart_temperature:
+      data_group: smartd_log_local.temperature_celsius
+      element: WDC_WD80EDAZ_11TA3A0-VDHP6BXK_194
+    disk2_reallocated_sector_count:
+      data_group: smartd_log_local.reallocated_sectors_count
+      element: WDC_WD80EDAZ_11TA3A0-VDHP6BXK_5
+    disk2_uncorrectable_sector_count:
+      data_group: smartd_log_local.offline_uncorrectable_sector_count
+      element: WDC_WD80EDAZ_11TA3A0-VDHP6BXK_198
+    disk2_current_pending_sector_count:
+      data_group: smartd_log_local.current_pending_sector_count
+      element: WDC_WD80EDAZ_11TA3A0-VDHP6BXK_197
+
+    # Disk Health Parity 1
+    parity1_space_available:
+      data_group: disk_space._mnt_parity1
+      element: avail
+    parity1_space_used:
+      data_group: disk_space._mnt_parity1
+      element: used
+    parity1_smart_temperature:
+      data_group: smartd_log_local.temperature_celsius
+      element: WDC_WD80EDAZ_11TA3A0-VDHSVLKK_194
+    parity1_reallocated_sector_count:
+      data_group: smartd_log_local.reallocated_sectors_count
+      element: WDC_WD80EDAZ_11TA3A0-VDHSVLKK_5
+    parity1_uncorrectable_sector_count:
+      data_group: smartd_log_local.offline_uncorrectable_sector_count
+      element: WDC_WD80EDAZ_11TA3A0-VDHSVLKK_198
+    parity1_current_pending_sector_count:
+      data_group: smartd_log_local.current_pending_sector_count
+      element: WDC_WD80EDAZ_11TA3A0-VDHSVLKK_197
+
+    # SSD Disk Health
+    ssd_smart_temperature:
+      data_group: smartd_log_local.airflow_temperature_celsius
+      element: Samsung_SSD_850_EVO_250GB-S2R6NX1J928885K_190
+
+    # Disk Space Storage (mergerfs)
+    storage_space_available:
+      data_group: disk_space._mnt_storage
+      element: avail
+    storage_space_used:
+      data_group: disk_space._mnt_storage
+      element: used
+
+    # ha_vm_cpu_user:
+    # data_group: cgroup_qemu.slice_103.scope.cpu
+    # element: user
+    # ha_vm_cpu_system:
+    # data_group: cgroup_qemu.slice_103.scope.cpu
+    # element: system
+    # ha_vm_ram_used:
+    # data_group: cgroup_qemu.slice_103.scope.mem_usage_limit
+    # element: used
+    # ha_vm_ram_free:
+    # data_group: cgroup_qemu.slice_103.scope.mem_usage_limit
+    # element: available
+
+#############################################################################
+#                          Netdata sensor conversions                       #
+#############################################################################
+- platform: template
+  sensors:
+    #### Proxmox sensors ####
+    proxmox_cpu_load:
+      friendly_name: "Processor"
+      unit_of_measurement: "%"
+      value_template: >-
+        {% set idle = (states.sensor.netdata_proxmox_cpu_load.state | float) %}
+        {% set load = (100 - idle) | round(2) %}
+        {{ load }}
+    proxmox_mbps_out:
+      friendly_name: "Outgoing traffic"
+      unit_of_measurement: "mbit/s"
+      value_template: >-
+        {% set kbit = (states.sensor.netdata_proxmox_network_out.state | float) %}
+        {% set load = (kbit / 1024) | round(2) %}
+        {{ load }}
+    proxmox_mbps_in:
+      friendly_name: "Incomming traffic"
+      unit_of_measurement: "mbit/s"
+      value_template: >-
+        {% set kbit = (states.sensor.netdata_proxmox_network_in.state | float) %}
+        {% set load = (kbit / 1024) | round(2) %}
+        {{ load }}
+    proxmox_uptime:
+      friendly_name: "Uptime"
+      value_template: >-
+        {% set time = (states.sensor.netdata_proxmox_uptime.state | int) | int %}
+        {% set minutes = ((time % 3600) / 60) | int %}
+        {% set hours = ((time % 86400) / 3600) | int %}
+        {% set days = (time / 86400) | int %}
+
+        {%- if time < 60 -%}
+          Less than a minute
+          {%- else -%}
+          {%- if days > 0 -%}
+            {{ days }}d
+          {%- endif -%}
+          {%- if hours > 0 -%}
+            {%- if days > 0 -%}
+              {{ ' ' }}
+            {%- endif -%}
+            {{ hours }}u
+          {%- endif -%}
+          {%- if minutes > 0 -%}
+            {%- if days > 0 or hours > 0 -%}
+              {{ ' ' }}
+            {%- endif -%}
+            {{ minutes }}m
+          {%- endif -%}
+        {%- endif -%}
+
+    #### HA VM sensors ####
+    # ha_vm_cpu_load:
+    # friendly_name: "Processor"
+    # unit_of_measurement: '%'
+    # value_template: >-
+    # {{ (states.sensor.netdata_ha_vm_cpu_user.state | round(2)) + (states.sensor.netdata_ha_vm_cpu_system.state | round(2)) }}
+
+##########################################################################################
+# Templates                                                                              #
+##########################################################################################
+- platform: template
+  sensors:
+    octo_time_remaining:
+      friendly_name: Tijd resterend
+      value_template: >-
+        {% set time = (states.sensor.octoprint_time_remaining.state | int) | int %}
+        {% set minutes = ((time % 3600) / 60) | int %}
+        {% set hours = ((time % 86400) / 3600) | int %}
+        {% set days = (time / 86400) | int %}
+
+        {%- if time < 60 -%}
+          < 1 min
+          {%- else -%}
+          {%- if days > 0 -%}
+            {{ days }}d
+          {%- endif -%}
+          {%- if hours > 0 -%}
+            {%- if days > 0 -%}
+              {{ ' ' }}
+            {%- endif -%}
+            {{ hours }}u
+          {%- endif -%}
+          {%- if minutes > 0 -%}
+            {%- if days > 0 or hours > 0 -%}
+              {{ ' ' }}
+            {%- endif -%}
+            {{ minutes }}m
+          {%- endif -%}
+        {%- endif -%}
+
+    octo_time_elapsed:
+      friendly_name: Tijd verstreken
+      value_template: >-
+        {% set time = (states.sensor.octoprint_time_elapsed.state | int) | int %}
+        {% set minutes = ((time % 3600) / 60) | int %}
+        {% set hours = ((time % 86400) / 3600) | int %}
+        {% set days = (time / 86400) | int %}
+
+        {%- if time < 60 -%}
+          < 1 min
+          {%- else -%}
+          {%- if days > 0 -%}
+            {{ days }}d
+          {%- endif -%}
+          {%- if hours > 0 -%}
+            {%- if days > 0 -%}
+              {{ ' ' }}
+            {%- endif -%}
+            {{ hours }}u
+          {%- endif -%}
+          {%- if minutes > 0 -%}
+            {%- if days > 0 or hours > 0 -%}
+              {{ ' ' }}
+            {%- endif -%}
+            {{ minutes }}m
+          {%- endif -%}
+        {%- endif -%}
+
+- platform: mqtt
+  name: Bridge state
+  state_topic: "zigbee2mqtt/bridge/state"
+  icon: mdi:router-wireless
+
+#############################################################################
+#                          SNMP                                             #
+#############################################################################
+###########################################
+
+#             Cisco SG250 26HP            #
+
+###########################################
+- platform: snmp
+  host: 192.168.1.254
+  community: homeassistant
+  name: Cisco Uptime
+  baseoid: 1.3.6.1.2.1.2.2.1.9.2
+  value_template: >-
+    {% set time = (value | int) | int %}
+    {% set minutes = ((time % 360000) / 6000) | int%}
+    {% set hours = ((time % 8640000) / 360000) | int %}
+    {% set days = (time / 8640000) | int %}
+      {%- if time < 60 -%}
+        Less then 1 min
+        {%- else -%}
+        {%- if days > 0 -%}
+          {{ days }}d
+        {%- endif -%}
+        {%- if hours > 0 -%}
+          {%- if days > 0 -%}
+            {{ ' ' }}
+          {%- endif -%}
+          {{ hours }}hr
+        {%- endif -%}
+        {%- if minutes > 0 -%}
+          {%- if days > 0 or hours > 0 -%}
+            {{ ' ' }}
+          {%- endif -%}
+          {{ minutes }}min
+        {%- endif -%}
+      {%- endif -%}
+
+- platform: snmp
+  name: Cisco CPU temp
+  unit_of_measurement: "°C"
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.4.1.9.6.1.101.83.5.1.1.2.1
+
+- platform: snmp
+  name: Cisco CPU load
+  unit_of_measurement: "%"
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.4.1.9.6.1.101.1.7.0
+
+- platform: snmp
+  name: Cisco Port 1
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.1
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 2
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.2
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 3
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.3
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 4
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.4
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 5
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.5
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 6
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.6
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 7
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.7
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 8
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.8
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 9
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.9
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 10
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.10
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 11
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.11
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 12
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.12
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 13
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.13
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 14
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.14
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 15
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.15
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 16
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.16
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 17
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.17
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 18
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.18
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 19
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.19
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 20
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.20
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 21
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.21
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 22
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.22
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 23
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.23
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 24
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.24
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+
+###########################################
+
+#             Ubiquiti AC Pro             #
+
+###########################################
+
+- platform: snmp
+  name: UniFi AC Pro uptime
+  host: 192.168.1.50
+  community: public
+  baseoid: 1.3.6.1.2.1.1.3.0
+  value_template: >-
+    {% set time = (value | int) | int %}
+    {% set minutes = ((time % 360000) / 6000) | int%}
+    {% set hours = ((time % 8640000) / 360000) | int %}
+    {% set days = (time / 8640000) | int %}
+      {%- if time < 60 -%}
+        Less then 1 min
+        {%- else -%}
+        {%- if days > 0 -%}
+          {{ days }}d
+        {%- endif -%}
+        {%- if hours > 0 -%}
+          {%- if days > 0 -%}
+            {{ ' ' }}
+          {%- endif -%}
+          {{ hours }}hr
+        {%- endif -%}
+        {%- if minutes > 0 -%}
+          {%- if days > 0 or hours > 0 -%}
+            {{ ' ' }}
+          {%- endif -%}
+          {{ minutes }}min
+        {%- endif -%}
+      {%- endif -%}
+
+- platform: snmp
+  name: UniFi AC Pro CPU Load
+  unit_of_measurement: "%"
+  host: 192.168.1.50
+  community: public
+  baseoid: 1.3.6.1.2.1.25.3.3.1.2.196608
+- platform: snmp
+  name: UniFi AC Pro CPU firmware
+  host: 192.168.1.50
+  community: public
+  baseoid: 1.3.6.1.2.1.25.3.3.1.2.196608
+
+########## Connected clients ###############
+- platform: snmp
+  name: Unifi AC Pro Radiance clients 2.4ghz
+  unit_of_measurement: "clients"
+  host: 192.168.1.50
+  baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.1
+- platform: snmp
+  name: Unifi AC Pro Radiance clients 5ghz
+  unit_of_measurement: "clients"
+  host: 192.168.1.50
+  baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.4
+- platform: snmp
+  name: Unifi AC Pro RadianceIOT clients 2.4ghz
+  unit_of_measurement: "clients"
+  host: 192.168.1.50
+  baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.3
+- platform: snmp
+  name: Unifi AC Pro RadianceIOT clients 5ghz
+  unit_of_measurement: "clients"
+  host: 192.168.1.50
+  baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.6
+- platform: snmp
+  name: Unifi AC Pro RadianceKinderen clients 2.4ghz
+  unit_of_measurement: "clients"
+  host: 192.168.1.50
+  baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.2
+- platform: snmp
+  name: Unifi AC Pro RadianceKinderen clients 5ghz
+  unit_of_measurement: "clients"
+  host: 192.168.1.50
+  baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.5
+  # Totaal
+- platform: template
+  sensors:
+    unifi_ac_pro_total_clients:
+      friendly_name: "Unifi AC Pro total clients"
+      value_template: >-
+        {{ (states.sensor.unifi_ac_pro_radiance_clients_2_4ghz.state | int) + (states.sensor.unifi_ac_pro_radiance_clients_5ghz.state | int) + (states.sensor.unifi_ac_pro_radianceiot_clients_2_4ghz.state | int) + (states.sensor.unifi_ac_pro_radianceiot_clients_5ghz.state | int) + (states.sensor.unifi_ac_pro_radiancekinderen_clients_2_4ghz.state | int) + (states.sensor.unifi_ac_pro_radiancekinderen_clients_5ghz.state | int)}}
+
+- platform: dsmr_reader

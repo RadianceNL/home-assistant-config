@@ -1,0 +1,103 @@
+type: entities
+show_header_toggle: off
+title: Zigbee device status
+entities:
+  - type: custom:vertical-stack-in-card
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: picture
+            image: /local/zigbee_2.png
+          - type: custom:bar-card
+            entity: sensor.bridge_state
+            title_position: inside
+
+      # Devices
+      - type: horizontal-stack
+        cards:
+          - type: custom:bar-card
+            positions:
+              name: inside
+              icon: inside
+            show_icon: true
+            align: split
+            padding: 4px
+            card_style:
+              border-radius: 5px
+            columns: 3
+            entities:
+              - entity: sensor.badkamer_switch_battery
+                name: Badkamer switch
+                icon: mdi:battery
+              - entity: sensor.eetkamer_switch_battery
+                name: Eetkamer switch
+                icon: mdi:battery
+              - entity: sensor.keuken_switch_battery
+                name: Keuken switch
+                icon: mdi:battery
+              - entity: sensor.slaapkamer_switch_battery
+                name: Slaapkamer switch
+                icon: mdi:battery
+              - entity: sensor.voordeur_sensor_battery
+                name: Voordeur sensor
+                icon: mdi:battery
+              - entity: sensor.woonkamer_temperatuursensor_battery
+                name: Thermometer woonkamer
+                icon: mdi:battery
+            severity:
+              - color: "#bf4040"
+                from: 0
+                to: 20
+              - color: "#bf9540"
+                from: 21
+                to: 40
+              - color: "#1db954"
+                from: 41
+                to: 100
+      - type: horizontal-stack
+        cards:
+          - type: custom:bar-card
+            positions:
+              name: inside
+              icon: inside
+            show_icon: true
+            align: split
+            padding: 4px
+            card_style:
+              border-radius: 5px
+            columns: 3
+            entities:
+              - entity: sensor.badkamer_switch_linkquality
+                name: Badkamer switch
+                icon: mdi:signal
+                max: 255
+              - entity: sensor.eetkamer_switch_linkquality
+                name: Eetkamer switch
+                icon: mdi:signal
+                max: 255
+              - entity: sensor.keuken_switch_linkquality
+                name: Keuken switch
+                icon: mdi:signal
+                max: 255
+              - entity: sensor.slaapkamer_switch_linkquality
+                name: Slaapkamer switch
+                icon: mdi:signal
+                max: 255
+              - entity: sensor.voordeur_sensor_linkquality
+                name: Voordeur sensor
+                icon: mdi:signal
+                max: 255
+              - entity: sensor.woonkamer_temperatuursensor_linkquality
+                name: Thermometer woonkamer
+                icon: mdi:signal
+                max: 255
+            severity:
+              - color: "#bf4040"
+                from: 0
+                to: 20
+              - color: "#bf9540"
+                from: 21
+                to: 50
+              - color: "#1db954"
+                from: 51
+                to: 255

@@ -1,0 +1,150 @@
+- id: '1584263682236'
+  alias: Wekker - woonkamer verlichting aan als zon onder is
+  description: Woonkamer verlichting aan als de zon onder is en de wekker is afgegaan.
+  trigger:
+  - platform: webhook
+    webhook_id: 2vdJZM7hbtfoJVazXbAJViV8N
+  condition:
+  - before: sunrise
+    before_offset: +02:00:00
+    condition: sun
+  action:
+  - delay: 00:10:00
+  - data:
+      transition: 2
+    entity_id: group.woonkamer_verlichting
+    service: light.turn_on
+  mode: single
+- id: '1584266502740'
+  alias: Voordeur - Als open en zon is onder licht hal aan
+  description: Als de zon onder is en de voordeur gaat open wordt het licht in de
+    hal aangezet
+  trigger:
+  - entity_id: binary_sensor.voordeur_sensor_contact
+    platform: state
+    to: 'on'
+  condition:
+  - condition: or
+    conditions:
+    - before: sunrise
+      condition: sun
+    - after: sunset
+      condition: sun
+  action:
+  - data: {}
+    entity_id: light.eetkamer_verlichting
+    service: light.turn_on
+  mode: single
+- id: '1610359771753'
+  alias: Prusa - Printer uit als print klaar is
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.octoprint_printing
+    from: 'on'
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: input_boolean.prusa_off_when_finished
+    state: 'on'
+  action:
+  - wait_for_trigger:
+    - platform: numeric_state
+      entity_id: sensor.octoprint_actual_tool0_temp
+      below: '80'
+    continue_on_timeout: true
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.prusa_off_when_finished
+  - service: switch.turn_off
+    data: {}
+    target:
+      device_id: ea971e8eda4cd8f74fe8b9863bd553c7
+  - service: light.turn_off
+    data: {}
+    entity_id: light.wled_printer_enclosure
+  mode: single
+- alias: Write Stepper Value to ESP
+  trigger:
+    platform: state
+    entity_id: input_number.stepper_control
+  action:
+  - service: esphome.lithophane_lamp_control_stepper
+    data_template:
+      target: '{{ trigger.to_state.state | int }}'
+  id: 6b6f8c80c525426ebcaad405bef0af11
+- id: '1620680005622'
+  alias: Telegram - Lights On
+  description: Send a message when nobody is home and lights are still on
+  trigger:
+  - platform: state
+    entity_id: group.persons
+    from: home
+    to: not_home
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: group.woonkamer_verlichting
+      state: 'on'
+    - condition: state
+      entity_id: group.slaapkamer_verlichting
+      state: 'on'
+    - condition: state
+      entity_id: group.keukenverlichting
+      state: 'on'
+    - condition: state
+      entity_id: light.eetkamer_verlichting
+      state: 'on'
+    - condition: state
+      entity_id: light.badkamerverlichting
+      state: 'on'
+  action:
+  - service: telegram_bot.send_message
+    data:
+      message: Er staat nog verlichting aan.
+  mode: single
+- id: '1624111485929'
+  alias: Prusa - Verlichting Printing
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.octoprint_printing
+    to: 'on'
+    from: 'off'
+  condition:
+  - condition: device
+    type: is_on
+    device_id: 2288b3220b22d40aac54eb204c68349c
+    entity_id: light.wled_prusa_enclosure
+    domain: light
+  action:
+  - service: wled.preset
+    data:
+      preset: 3
+    target:
+      entity_id:
+      - light.wled_prusa_enclosure_master
+  mode: single
+- id: '1624112238858'
+  alias: Prusa - Verlichting Not Printing
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.octoprint_printing
+    from: 'on'
+    to: 'off'
+  condition:
+  - condition: device
+    type: is_on
+    device_id: 2288b3220b22d40aac54eb204c68349c
+    entity_id: light.wled_prusa_enclosure
+    domain: light
+  action:
+  - service: wled.preset
+    target:
+      device_id: 2288b3220b22d40aac54eb204c68349c
+    data:
+      preset: 1
+  mode: single

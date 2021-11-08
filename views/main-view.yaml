@@ -1,0 +1,14 @@
+###################### Homepage ###################################
+title: Thuis
+icon: mdi:home
+cards:
+  - !include /config/views/cards/woonkamer/weather-card.yaml
+  - !include /config/views/cards/woonkamer/persons-card.yaml
+  - !include /config/views/cards/woonkamer/woonkamer-card.yaml
+  - !include /config/views/cards/woonkamer/mediaplayers-card.yaml
+  - !include /config/views/cards/eetkamer/eetkamer-card.yaml
+  - !include /config/views/cards/slaapkamer/slaapkamer-card.yaml
+  - !include /config/views/cards/woonkamer/stofzuiger-card.yaml
+  - !include /config/views/cards/keuken/keuken-card.yaml
+  - !include /config/views/cards/badkamer/badkamer-card.yaml
+  - !include /config/views/cards/kantoor/prusa-mk3s-card.yaml

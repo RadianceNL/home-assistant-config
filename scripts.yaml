@@ -1,0 +1,70 @@
+geluid_aan:
+  sequence:
+  - alias: Mengpaneel
+    data:
+      entity_id: switch.mengpaneel_socket
+    service: switch.turn_on
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 500
+  - alias: Monitorspeakers
+    data:
+      entity_id: switch.monitorspeakers_socket
+    service: switch.turn_on
+  mode: single
+  icon: mdi:speaker
+  alias: Geluid aan
+geluid_uit:
+  sequence:
+  - alias: Monitor boxen
+    data:
+      entity_id: switch.monitorspeakers_socket
+    service: switch.turn_off
+  - delay: 00:00:01
+  - alias: Mengpaneel
+    data:
+      entity_id: switch.mengpaneel_socket
+    service: switch.turn_off
+  mode: single
+  icon: mdi:speaker-off
+  alias: Geluid uit
+'1584265814460':
+  alias: Wekker - woonkamer verlichting aan na 10 minuten
+  sequence:
+  - before: sunrise
+    before_offset: +01:00:00
+    condition: sun
+  - delay: 00:10:00
+  - data:
+      transition: 2
+    entity_id: group.woonkamer_verlichting
+    service: light.turn_on
+  mode: single
+cinema_uit:
+  alias: Cinema uit
+  sequence:
+  - service: wled.preset
+    target:
+      area_id: 7db9e3379f814a959a23d82a0c61a26e
+    data:
+      preset: 1
+  - service: light.turn_on
+    target:
+      entity_id: light.hong_kong_spots
+  mode: single
+  icon: mdi:movie-open-off
+cinema_aan:
+  alias: Cinema aan
+  sequence:
+  - service: wled.preset
+    target:
+      area_id: 7db9e3379f814a959a23d82a0c61a26e
+    data:
+      preset: 2
+  - service: light.turn_off
+    target:
+      entity_id: light.hong_kong_spots
+  mode: single
+  icon: mdi:movie-open
