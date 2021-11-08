@@ -7,11 +7,11 @@ secrets.yaml
 google_assistant.yaml
 zigbee.db
 
+appdaemon
 deprecated
 esphome
 image
 node-red
-appdaemon
 
 HomeAssistant*
 home-assistant*
