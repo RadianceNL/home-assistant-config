@@ -35,3 +35,5 @@ entities:
           - entity: sensor.dsmr_consumption_gas_currently_delivered
             color: red
             name: Gasverbruik
+            
+            

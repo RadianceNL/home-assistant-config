@@ -2,3 +2,10 @@ title: Stroomverbruik
 icon: mdi:flash
 cards:
   - !include /config/views/cards/energie/energieverbruik-card.yaml
+  # - !include /config/views/cards/energie/energy-cards.yaml
+
+  - type: energy-date-selection
+  - type: energy-usage-graph
+  - type: energy-usage-graph
+  - type: energy-solar-graph
+  - type: energy-gas-graph
