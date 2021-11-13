@@ -16,12 +16,12 @@
 #      transition: 1000
 #      save_on_change: True
 
-# - platform: group
-#   name: Hong Kong Spots
-#   entities:
-#     - light.hongkong_spot_1
-#     - light.hongkong_spot_2
-#     - light.hongkong_spot_3
+- platform: group
+  name: Hong Kong Spots
+  entities:
+    - light.hongkong_spot_1
+    - light.hongkong_spot_2
+    - light.hongkong_spot_3
     
 # - platform: group
 #   name: Slaapkamer spots

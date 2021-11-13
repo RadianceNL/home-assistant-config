@@ -2,6 +2,7 @@
 .vscode
 .cloud
 .HA_VERSION
+.omv_cookies.json
 
 secrets.yaml
 google_assistant.yaml

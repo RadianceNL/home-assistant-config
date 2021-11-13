@@ -30,41 +30,41 @@ entities:
                 name: Temperatuur
                 icon: mdi:thermometer
                 severity:
-                  - color: "#88d2fc"
+                  - color: '#88d2fc'
                     from: 0
                     to: 18
-                  - color: "#1db954"
+                  - color: '#1db954'
                     from: 19
                     to: 34
-                  - color: "#bf9540"
+                  - color: '#bf9540'
                     from: 35
                     to: 39
-                  - color: "#bf4040"
+                  - color: '#bf4040'
                     from: 40
                     to: 100
               - entity: sensor.serverkast_luchtvochtigheid
                 name: Luchtvochtigheid
                 severity:
-                  - color: "#88d2fc"
+                  - color: '#88d2fc'
                     from: 0
                     to: 60
-                  - color: "#009ef7"
+                  - color: '#009ef7'
                     from: 61
                     to: 80
-                  - color: "#0a47c9"
+                  - color: '#0a47c9'
                     from: 81
                     to: 100
               - entity: sensor.proxmox_cpu_load
                 name: CPU load
                 icon: mdi:memory
                 severity:
-                  - color: "#1db954"
+                  - color: '#1db954'
                     from: 0
                     to: 50
-                  - color: "#bf9540"
+                  - color: '#bf9540'
                     from: 51
                     to: 75
-                  - color: "#bf4040"
+                  - color: '#bf4040'
                     from: 76
                     to: 100
               - entity: sensor.netdata_proxmox_cpu_temperatuur
@@ -72,50 +72,50 @@ entities:
                 icon: mdi:thermometer
                 unit_of_measurement: °C
                 severity:
-                  - color: "#1db954"
+                  - color: '#1db954'
                     from: 0
                     to: 65
-                  - color: "#bf9540"
+                  - color: '#bf9540'
                     from: 66
                     to: 80
-                  - color: "#bf4040"
+                  - color: '#bf4040'
                     from: 81
                     to: 100
               - entity: sensor.netdata_proxmox_ram_used
                 name: RAM gebruikt
-                color: "#1db954"
+                color: '#1db954'
                 max: 16384
                 severity:
-                  - color: "#1db954"
+                  - color: '#1db954'
                     from: 0
                     to: 10240
-                  - color: "#bf9540"
+                  - color: '#bf9540'
                     from: 10241
                     to: 14336
-                  - color: "#bf4040"
+                  - color: '#bf4040'
                     from: 14337
                     to: 16384
               - entity: sensor.netdata_proxmox_ram_free
                 name: RAM vrij
-                color: "#bf4040"
+                color: '#bf4040'
                 max: 16384
                 severity:
-                  - color: "#1db954"
+                  - color: '#1db954'
                     from: 0
                     to: 10240
-                  - color: "#bf9540"
+                  - color: '#bf9540'
                     from: 10241
                     to: 14336
-                  - color: "#bf4040"
+                  - color: '#bf4040'
                     from: 14337
                     to: 16384
               - entity: sensor.proxmox_mbps_in
                 name: Download
-                color: "#1db954"
+                color: '#1db954'
                 max: 250
               - entity: sensor.proxmox_mbps_out
                 name: Upload
-                color: "#bf4040"
+                color: '#bf4040'
                 max: 50
               - entity: sensor.server_socket_current
                 name: Server amperage
@@ -125,328 +125,3 @@ entities:
                 name: Server verbruik
               - entity: sensor.server_socket_voltage
                 name: Server socket voltage
-
-  # Disk Space Disk 1
-  - type: custom:bar-card
-    title: Disk Health Disk 1
-    positions:
-      name: inside
-      icon: inside
-    show_icon: true
-    align: split
-    padding: 4px
-    card_style:
-      border-radius: 5px
-    columns: 2
-    entities:
-      - entity: sensor.netdata_disk1_space_available
-        name: Available
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 6798.65479
-        severity:
-          - color: "#bf4040"
-            from: 0
-            to: 680
-          - color: "#bf9540"
-            from: 681
-            to: 1699
-          - color: "#1db954"
-            from: 1700
-            to: 6798.65479
-      - entity: sensor.netdata_disk1_space_used
-        name: Used
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 6798.65479
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 5099
-          - color: "#bf9540"
-            from: 5100
-            to: 6117
-          - color: "#bf4040"
-            from: 6118
-            to: 6798.65479
-      - entity: sensor.netdata_disk1_smart_temperature
-        name: Temperature
-        icon: mdi:thermometer
-        color: "#bf4040"
-        max: 100
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 60
-          - color: "#bf9540"
-            from: 61
-            to: 70
-          - color: "#bf4040"
-            from: 71
-            to: 100
-      - entity: sensor.netdata_disk1_current_pending_sector_count
-        name: Pending sector count
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 10
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 1
-          - color: "#bf4040"
-            from: 2
-            to: 10
-      - entity: sensor.netdata_disk1_reallocated_sector_count
-        name: Reallocated sector count
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 10
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 1
-          - color: "#bf4040"
-            from: 2
-            to: 10
-      - entity: sensor.netdata_disk1_uncorrectable_sector_count
-        name: Uncorrectable sector count
-        color: "#bf4040"
-        max: 10
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 1
-          - color: "#bf4040"
-            from: 2
-            to: 10
-
-  # Disk Space Disk 2
-  - type: custom:bar-card
-    title: Disk Health Disk 2
-    positions:
-      name: inside
-      icon: inside
-    show_icon: true
-    align: split
-    padding: 4px
-    card_style:
-      border-radius: 5px
-    columns: 2
-    entities:
-      - entity: sensor.netdata_disk2_space_available
-        name: Available
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 6798.65479
-        severity:
-          - color: "#bf4040"
-            from: 0
-            to: 680
-          - color: "#bf9540"
-            from: 681
-            to: 1699
-          - color: "#1db954"
-            from: 1700
-            to: 6798.65479
-      - entity: sensor.netdata_disk2_space_used
-        name: Used
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 6798.65479
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 5099
-          - color: "#bf9540"
-            from: 5100
-            to: 6117
-          - color: "#bf4040"
-            from: 6118
-            to: 6798.65479
-      - entity: sensor.netdata_disk2_smart_temperature
-        name: Temperature
-        icon: mdi:thermometer
-        color: "#bf4040"
-        max: 100
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 60
-          - color: "#bf9540"
-            from: 61
-            to: 70
-          - color: "#bf4040"
-            from: 71
-            to: 100
-      - entity: sensor.netdata_disk2_current_pending_sector_count
-        name: Pending sector count
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 10
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 1
-          - color: "#bf4040"
-            from: 2
-            to: 10
-      - entity: sensor.netdata_disk2_reallocated_sector_count
-        name: Reallocated sector count
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 10
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 1
-          - color: "#bf4040"
-            from: 2
-            to: 10
-      - entity: sensor.netdata_disk2_uncorrectable_sector_count
-        name: Uncorrectable sector count
-        color: "#bf4040"
-        max: 10
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 1
-          - color: "#bf4040"
-            from: 2
-            to: 10
-
-  # Disk Parity 1
-  - type: custom:bar-card
-    title: Disk Health Parity 1
-    positions:
-      name: inside
-      icon: inside
-    show_icon: true
-    align: split
-    padding: 4px
-    card_style:
-      border-radius: 5px
-    columns: 2
-    entities:
-      - entity: sensor.netdata_parity1_space_available
-        name: Available
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 6798.65479
-        severity:
-          - color: "#bf4040"
-            from: 0
-            to: 680
-          - color: "#bf9540"
-            from: 681
-            to: 1699
-          - color: "#1db954"
-            from: 1700
-            to: 6798.65479
-      - entity: sensor.netdata_parity1_space_used
-        name: Used
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 6798.65479
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 5099
-          - color: "#bf9540"
-            from: 5100
-            to: 6117
-          - color: "#bf4040"
-            from: 6118
-            to: 6798.65479
-      - entity: sensor.netdata_parity1_smart_temperature
-        name: Temperature
-        icon: mdi:thermometer
-        color: "#bf4040"
-        max: 100
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 60
-          - color: "#bf9540"
-            from: 61
-            to: 70
-          - color: "#bf4040"
-            from: 71
-            to: 100
-      - entity: sensor.netdata_parity1_current_pending_sector_count
-        name: Pending sector count
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 10
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 1
-          - color: "#bf4040"
-            from: 2
-            to: 10
-      - entity: sensor.netdata_parity1_reallocated_sector_count
-        name: Reallocated sector count
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 10
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 1
-          - color: "#bf4040"
-            from: 2
-            to: 10
-      - entity: sensor.netdata_parity1_uncorrectable_sector_count
-        name: Uncorrectable sector count
-        color: "#bf4040"
-        max: 10
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 1
-          - color: "#bf4040"
-            from: 2
-            to: 10
-  # Storage
-  - type: custom:bar-card
-    title: Storage
-    positions:
-      name: inside
-      icon: inside
-    show_icon: true
-    align: split
-    padding: 4px
-    card_style:
-      border-radius: 5px
-    columns: 2
-    entities:
-      - entity: sensor.netdata_storage_space_available
-        name: Available
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 14039.3232804
-        severity:
-          - color: "#bf4040"
-            from: 0
-            to: 1403
-          - color: "#bf9540"
-            from: 1404
-            to: 3509
-          - color: "#1db954"
-            from: 3510
-            to: 14039.3232804
-      - entity: sensor.netdata_storage_space_used
-        name: Used
-        icon: mdi:harddisk
-        color: "#bf4040"
-        max: 14039.3232804
-        severity:
-          - color: "#1db954"
-            from: 0
-            to: 10528
-          - color: "#bf9540"
-            from: 10529
-            to: 12634
-          - color: "#bf4040"
-            from: 12635
-            to: 14039.3232804

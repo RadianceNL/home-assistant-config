@@ -1,0 +1,334 @@
+type: vertical-stack
+cards:
+  # Disk Space Disk 1
+  - type: custom:bar-card
+    title: Disk Health Disk 1
+    positions:
+      name: inside
+      icon: inside
+    show_icon: true
+    align: split
+    padding: 4px
+    card_style:
+      border-radius: 5px
+    columns: 2
+    entities:
+      - entity: sensor.omv_2
+        attribute: Available
+        unit_of_measurement: GB
+        name: Available
+        icon: mdi:harddisk
+        color: '#bf4040' #RED
+        max: 7392.3
+        severity:
+          - color: '#bf4040' #RED
+            from: 0
+            to: 680
+          - color: '#bf9540' #YELLOW
+            from: 681
+            to: 1699
+          - color: '#1db954' #GREEN
+            from: 1700
+            to: 7392.3
+      - entity: sensor.omv_2
+        name: Used
+        icon: mdi:harddisk
+        color: '#bf4040'
+        max: 100
+        severity:
+          - color: '#1db954' #GREEN
+            from: 0
+            to: 75
+          - color: '#bf9540' #YELLOW
+            from: 76
+            to: 90
+          - color: '#bf4040' #RED
+            from: 91
+            to: 100
+      - entity: sensor.netdata_disk1_smart_temperature
+        name: Temperature
+        icon: mdi:thermometer
+        color: '#bf4040'
+        max: 100
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 60
+          - color: '#bf9540'
+            from: 61
+            to: 70
+          - color: '#bf4040'
+            from: 71
+            to: 100
+      - entity: sensor.netdata_disk1_current_pending_sector_count
+        name: Pending sector count
+        icon: mdi:harddisk
+        color: '#bf4040'
+        max: 10
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 1
+          - color: '#bf4040'
+            from: 2
+            to: 10
+      - entity: sensor.netdata_disk1_reallocated_sector_count
+        name: Reallocated sector count
+        icon: mdi:harddisk
+        color: '#bf4040'
+        max: 10
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 1
+          - color: '#bf4040'
+            from: 2
+            to: 10
+      - entity: sensor.netdata_disk1_uncorrectable_sector_count
+        name: Uncorrectable sector count
+        color: '#bf4040'
+        max: 10
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 1
+          - color: '#bf4040'
+            from: 2
+            to: 10
+
+  # Disk Space Disk 2
+  - type: custom:bar-card
+    title: Disk Health Disk 2
+    positions:
+      name: inside
+      icon: inside
+    show_icon: true
+    align: split
+    padding: 4px
+    card_style:
+      border-radius: 5px
+    columns: 2
+    entities:
+      - entity: sensor.omv_3
+        attribute: Available
+        unit_of_measurement: GB
+        name: Available
+        icon: mdi:harddisk
+        color: '#bf4040' #RED
+        max: 7392.3
+        severity:
+          - color: '#bf4040' #RED
+            from: 0
+            to: 680
+          - color: '#bf9540' #YELLOW
+            from: 681
+            to: 1699
+          - color: '#1db954' #GREEN
+            from: 1700
+            to: 7392.3
+      - entity: sensor.omv_3
+        name: Used
+        icon: mdi:harddisk
+        color: '#bf4040'
+        max: 100
+        severity:
+          - color: '#1db954' #GREEN
+            from: 0
+            to: 75
+          - color: '#bf9540' #YELLOW
+            from: 76
+            to: 90
+          - color: '#bf4040' #RED
+            from: 91
+            to: 100
+      - entity: sensor.netdata_disk2_smart_temperature
+        name: Temperature
+        icon: mdi:thermometer
+        color: '#bf4040'
+        max: 100
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 60
+          - color: '#bf9540'
+            from: 61
+            to: 70
+          - color: '#bf4040'
+            from: 71
+            to: 100
+      - entity: sensor.netdata_disk2_current_pending_sector_count
+        name: Pending sector count
+        icon: mdi:harddisk
+        color: '#bf4040'
+        max: 10
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 1
+          - color: '#bf4040'
+            from: 2
+            to: 10
+      - entity: sensor.netdata_disk2_reallocated_sector_count
+        name: Reallocated sector count
+        icon: mdi:harddisk
+        color: '#bf4040'
+        max: 10
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 1
+          - color: '#bf4040'
+            from: 2
+            to: 10
+      - entity: sensor.netdata_disk2_uncorrectable_sector_count
+        name: Uncorrectable sector count
+        color: '#bf4040'
+        max: 10
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 1
+          - color: '#bf4040'
+            from: 2
+            to: 10
+
+  # Disk Parity 1
+  - type: custom:bar-card
+    title: Disk Health Parity 1
+    positions:
+      name: inside
+      icon: inside
+    show_icon: true
+    align: split
+    padding: 4px
+    card_style:
+      border-radius: 5px
+    columns: 2
+    entities:
+      - entity: sensor.omv_parity1
+        attribute: Available
+        unit_of_measurement: GB
+        name: Available
+        icon: mdi:harddisk
+        color: '#bf4040' #RED
+        max: 7392.3
+        severity:
+          - color: '#bf4040' #RED
+            from: 0
+            to: 680
+          - color: '#bf9540' #YELLOW
+            from: 681
+            to: 1699
+          - color: '#1db954' #GREEN
+            from: 1700
+            to: 7392.3
+      - entity: sensor.omv_parity1
+        name: Used
+        icon: mdi:harddisk
+        color: '#bf4040'
+        max: 100
+        severity:
+          - color: '#1db954' #GREEN
+            from: 0
+            to: 75
+          - color: '#bf9540' #YELLOW
+            from: 76
+            to: 90
+          - color: '#bf4040' #RED
+            from: 91
+            to: 100
+      - entity: sensor.netdata_parity1_smart_temperature
+        name: Temperature
+        icon: mdi:thermometer
+        color: '#bf4040'
+        max: 100
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 60
+          - color: '#bf9540'
+            from: 61
+            to: 70
+          - color: '#bf4040'
+            from: 71
+            to: 100
+      - entity: sensor.netdata_parity1_current_pending_sector_count
+        name: Pending sector count
+        icon: mdi:harddisk
+        color: '#bf4040'
+        max: 10
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 1
+          - color: '#bf4040'
+            from: 2
+            to: 10
+      - entity: sensor.netdata_parity1_reallocated_sector_count
+        name: Reallocated sector count
+        icon: mdi:harddisk
+        color: '#bf4040'
+        max: 10
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 1
+          - color: '#bf4040'
+            from: 2
+            to: 10
+      - entity: sensor.netdata_parity1_uncorrectable_sector_count
+        name: Uncorrectable sector count
+        color: '#bf4040'
+        max: 10
+        severity:
+          - color: '#1db954'
+            from: 0
+            to: 1
+          - color: '#bf4040'
+            from: 2
+            to: 10
+  # # Storage
+  - type: custom:bar-card
+    title: Storage (mergerfs)
+    positions:
+      name: inside
+      icon: inside
+    show_icon: true
+    align: split
+    padding: 4px
+    card_style:
+      border-radius: 5px
+    columns: 2
+    entities:
+      - entity: sensor.omv_storage
+        attribute: Available
+        unit_of_measurement: GB
+        name: Available
+        icon: mdi:harddisk
+        color: '#bf4040' #RED
+        max: 14784.6
+        severity:
+          - color: '#bf4040' #RED
+            from: 0
+            to: 680
+          - color: '#bf9540' #YELLOW
+            from: 681
+            to: 1699
+          - color: '#1db954' #GREEN
+            from: 1700
+            to: 14784.6
+      - entity: sensor.omv_storage
+        name: Used
+        icon: mdi:harddisk
+        color: '#bf4040'
+        max: 100
+        severity:
+          - color: '#1db954' #GREEN
+            from: 0
+            to: 75
+          - color: '#bf9540' #YELLOW
+            from: 76
+            to: 90
+          - color: '#bf4040' #RED
+            from: 91
+            to: 100

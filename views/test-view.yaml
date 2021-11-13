@@ -146,6 +146,15 @@ cards:
                 icon: mdi:led-off
                 show_state: false
 
+              - type: "custom:slider-entity-row"
+                entity: light.hong_kong_spots
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                icon: mdi:led-off
+                show_state: false
+
       - type: entities
         title: Test thuis/niet thuis
         entities:
