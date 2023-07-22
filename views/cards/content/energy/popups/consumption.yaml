@@ -1,0 +1,29 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    content:
+      title: Energie verbruik
+      card_mod: |
+        :host {
+          --ha-card-box-shadow: none;
+        }
+      type: entities
+      entities:
+        - type: "custom:slider-entity-row"
+          entity: light.wled_prusa_enclosure
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          icon: mdi:printer-3d-nozzle
+          show_state: false
+
+        - type: "custom:slider-entity-row"
+          entity: light.wled_prusa_enclosure_bottom
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          icon: mdi:border-bottom
+          show_state: false

@@ -1,0 +1,28 @@
+type: custom:button-card
+style: |
+  @media only screen and (max-width: 600px) {
+    .ellipsis  {
+      padding-top: 10px !important;
+    }
+  }
+view_layout:
+  grid-area: clockinfo
+tap_action:
+  action: navigate
+  navigation_path: '#datumtijd'
+show_icon: false
+show_name: false
+show_state: true
+entity: sensor.date_formatted
+styles:
+  card:
+    - background-color: transparent
+    - height: 25px
+    - box-shadow: none
+  state:
+    - font-size: 15px
+    - color: var(--secondary-text-color)
+    - position: absolute
+    - padding-bottom: 10px
+    - font-weight: normal
+    - justify-self: start

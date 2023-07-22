@@ -1,0 +1,27 @@
+type: custom:multiple-entity-row
+entity: light.dimmer_badkamer
+tap_action:
+  action: toggle
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:shower-head
+name: Badkamner
+show_state: false
+secondary_info:
+  entity: sensor.aqara_badkamer_thermometer_temperature
+  name: false
+entities:
+  - entity: sensor.aqara_badkamer_thermometer_humidity
+    name: humidity
+  - entity: light.dimmer_badkamer
+    icon: mdi:ceiling-light
+    name: false
+    state_color: true
+    tap_action:
+      action: toggle

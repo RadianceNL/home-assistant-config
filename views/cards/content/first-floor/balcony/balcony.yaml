@@ -1,0 +1,24 @@
+type: custom:multiple-entity-row
+entity: sun.sun
+tap_action:
+  action: toggle
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:balcony
+name: Balkon
+secondary_info:
+  entity: sensor.woonkamer_temperature
+  name: false
+entities:
+  # - entity: light.badkamer_verlichting
+  #   icon: mdi:ceiling-light
+  #   name: false
+  #   state_color: true
+  #   tap_action:
+  #     action: toggle

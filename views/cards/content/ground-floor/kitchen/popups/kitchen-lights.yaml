@@ -1,0 +1,45 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Keuken verlichting
+    style: |
+      :host {
+        --ha-card-box-shadow: none;
+      }
+    # style: |
+    #   :host {
+    #     --ha-card-box-shadow: none;
+    #     --mdc-theme-surface: rgb(26, 40, 55, 0.8);
+    #     --ha-card-background: rgb(26, 40, 55, 0.2);
+    #     --secondary-background-color: rgb(26, 40, 55, 0.8);
+    #   }
+    content:
+      type: entities
+      entities:
+        - type: 'custom:slider-entity-row'
+          entity: light.dimmer_keuken
+          name: Keuken
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          show_state: false
+
+        - type: 'custom:slider-entity-row'
+          entity: light.z2m_group_verlichting_kookeiland
+          name: Kookeiland
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          show_state: false
+
+        - type: 'custom:slider-entity-row'
+          entity: light.verlichting_keuken_werkblad
+          name: Werkblad
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          show_state: false

@@ -1,0 +1,30 @@
+type: custom:multiple-entity-row
+entity: sensor.omv_uptime
+tap_action: !include /config/views/cards/content/homelab/omv/popups/omv.yaml
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:harddisk
+name: Open Media Vault
+show_state: false
+secondary_info:
+  entity: sensor.omv_total_storage
+  name: false
+entities:
+  - entity: sensor.omv_disk_1
+    name: HD 1
+    tap_action: !include /config/views/cards/content/homelab/omv/popups/disk1.yaml
+  - entity: sensor.omv_disk_2
+    name: HD 2
+    tap_action: !include /config/views/cards/content/homelab/omv/popups/disk2.yaml
+  - entity: sensor.omv_parity1
+    name: Parity
+    tap_action: !include /config/views/cards/content/homelab/omv/popups/parity.yaml
+  - entity: sensor.omv_total_storage
+    name: Opslag
+    tap_action: !include /config/views/cards/content/homelab/omv/popups/storage.yaml

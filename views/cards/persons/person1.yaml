@@ -1,0 +1,15 @@
+type: picture-glance
+view_layout:
+  grid-area: personcard1
+title: Jeroen
+image: /local/jeroen.jpg
+state_filter:
+  not_home: grayscale(100%)
+entity: person.jeroen
+entities:
+  - entity: device_tracker.jeroen
+    show_state: true
+  - entity: sensor.jeroen_batterijniveau
+    show_state: true
+  - entity: binary_sensor.jeroen_is_aan_het_opladen
+    show_state: true

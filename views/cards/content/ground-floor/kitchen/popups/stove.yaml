@@ -1,0 +1,25 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Oven
+    style: |
+      :host {
+        --ha-card-box-shadow: none;
+      }
+    # style: |
+    #   :host {
+    #     --ha-card-box-shadow: none;
+    #     --mdc-theme-surface: rgb(26, 40, 55, 0.8);
+    #     --ha-card-background: rgb(26, 40, 55, 0.2);
+    #     --secondary-background-color: rgb(26, 40, 55, 0.8);
+    #   }
+    content:
+      type: entities
+      entities:
+        - switch.oven_power
+        - switch.oven_program_preheating
+        - sensor.oven_operation_state
+        - sensor.oven_duration
+        - sensor.oven_remaining_program_time
+        - binary_sensor.oven_door

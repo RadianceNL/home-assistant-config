@@ -1,19 +1,25 @@
+.cloud
+.ssl
 .storage
 .vscode
-.cloud
-.HA_VERSION
 
+.HA_VERSION
+.omv_cookies.json
+HomeAssistant-GoogleAssistant.json
 secrets.yaml
-google_assistant.yaml
+nest.yaml
+webostv.conf
 zigbee.db
 
 appdaemon
+blueprints
 deprecated
 esphome
 image
 node-red
+tts
+nest
+blueprints
 
 HomeAssistant*
 home-assistant*
-
-webostv.conf

@@ -1,0 +1,28 @@
+type: custom:multiple-entity-row
+entity: sensor.dsmr_reading_electricity_currently_delivered
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:lightning-bolt
+name: Verbruik
+state_color: true
+show_state: false
+# tap_action: !include /config/views/tablet/cards/content/energy/popups/consumption.yaml
+secondary_info:
+  entity: sensor.dsmr_reading_electricity_currently_delivered
+  name: false
+entities:
+  - entity: sensor.dsmr_day_consumption_electricity_cost_merged
+    name: Kosten
+    state_color: true
+  - entity: sensor.dsmr_day_consumption_electricity1
+    name: Dal
+  - entity: sensor.dsmr_day_consumption_electricity2
+    name: Piek
+  - entity: sensor.dsmr_day_consumption_electricity_merged
+    name: Totaal

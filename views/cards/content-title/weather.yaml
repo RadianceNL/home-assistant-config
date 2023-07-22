@@ -1,0 +1,26 @@
+type: custom:button-card
+entity: sun.sun
+tap_action:
+  action: none
+show_state: false
+show_name: true
+show_icon: false
+name: Weer
+styles:
+  grid:
+    - grid-template-areas: '"i s s"'
+    - grid-template-columns: 1fr
+    - grid-template-rows: 1fr min-content min-content
+  name:
+    - z-index: 2
+    - position: absolute
+    - font-size: 18px
+    - font-weight: bold
+    - justify-self: start
+    - left: 0px
+    - top: 0px
+    - color: var(--secondary-text-color)
+  card:
+    - background: transparent
+    - width: 340px
+    - box-shadow: none

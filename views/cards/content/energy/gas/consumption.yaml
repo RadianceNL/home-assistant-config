@@ -1,0 +1,23 @@
+type: custom:multiple-entity-row
+entity: sensor.dsmr_consumption_gas_currently_delivered
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:gas-cylinder
+name: Gas
+state_color: true
+show_state: false
+# tap_action: !include /config/views/tablet/cards/content/energy/popups/usage.yaml
+secondary_info:
+  entity: sensor.dsmr_consumption_gas_currently_delivered
+  name: false
+entities:
+  - entity: sensor.dsmr_day_consumption_gas_cost
+    name: Kosten
+  - entity: sensor.dsmr_day_consumption_gas
+    name: Verbruikt

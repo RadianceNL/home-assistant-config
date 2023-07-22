@@ -1,0 +1,22 @@
+type: custom:multiple-entity-row
+entity: sensor.proxmox_uptime
+tap_action: !include /config/views/cards/content/homelab/cisco/popups/cisco.yaml
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:router-network
+name: Cisco SG250-26HP
+show_state: false
+secondary_info:
+  entity: sensor.cisco_cpu_temp
+  name: false
+entities:
+  - entity: sensor.cisco_uptime
+    name: Uptime
+  - entity: sensor.cisco_cpu_load
+    name: CPU load

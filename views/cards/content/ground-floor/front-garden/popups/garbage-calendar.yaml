@@ -1,0 +1,13 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    content:
+      card_mod:
+        style: |
+          ha-icon-button.button {
+            color: white;
+          }
+        type: calendar
+        entities:
+          - calendar.af

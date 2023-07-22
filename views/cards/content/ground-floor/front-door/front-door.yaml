@@ -1,0 +1,43 @@
+type: custom:multiple-entity-row
+entity: sun.sun
+tap_action:
+  action: toggle
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:door
+name: Voordeur
+show_state: false
+secondary_info:
+  entity: lock.voortuindeur_opener
+  name: false
+entities:
+  - entity: lock.voortuindeur_opener
+    icon: mdi:door-open
+    name: false
+    state_color: true
+    tap_action:
+      action: call-service
+      service: lock.unlock
+      service_data:
+        entity_id: lock.voortuindeur_opener
+      confirmation:
+        text: Weet je zeker dat je de voortuindeur open wilt doen?
+  - entity: lock.voortuindeur_opener
+    icon: mdi:door-closed-lock
+    name: false
+    state_color: true
+    tap_action:
+      action: call-service
+      service: lock.lock
+      service_data:
+        entity_id: lock.voortuindeur_opener
+  - entity: camera.deurbel
+    icon: mdi:doorbell-video
+    name: false
+    state_color: true

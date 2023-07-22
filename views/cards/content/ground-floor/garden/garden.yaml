@@ -1,0 +1,32 @@
+type: custom:multiple-entity-row
+entity: light.tuya_tuin_terras_spots
+tap_action:
+  action: toggle
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:flower
+name: Tuin
+show_state: false
+secondary_info:
+  entity: sensor.woonkamer_temperature
+  name: false
+entities:
+  - entity: cover.zonwering_tuin
+    icon: mdi:shield-sun
+    name: false
+    state_color: false
+  - entity: light.tuya_tuin_terras_spots
+    icon: phu:rooms-terrace
+    name: false
+    state_color: true
+  - entity: camera.frigate_voortuin
+    icon: mdi:cctv
+    name: false
+    state_color: true
+    tap_action: !include /config/views/cards/content/ground-floor/garden/popups/garden-camera.yaml

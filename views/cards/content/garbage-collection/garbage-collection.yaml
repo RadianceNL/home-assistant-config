@@ -1,0 +1,23 @@
+type: entities
+card_mod:
+  style: |
+    ha-card {
+      border-radius: 10px;
+      font-size: 15px !important;
+      --ha-card-background: rgb(0,0,0,0.2);
+      --mdc-icon-size: 30px !important;
+      --paper-item-icon-active-color: rgba(255, 255, 255, 1);
+      --paper-item-icon-color: rgba(255, 255, 255, 0.3);
+    }
+    @media only screen and (max-width: 600px) {
+      ha-card {
+        width: 96vw;
+        font-size: 12px !important;
+      --mdc-icon-size: 20px !important;
+      }
+    }
+entities:
+  - !include /config/views/cards/content/garbage-collection/rows/garbage-incomming.yaml
+  - !include /config/views/cards/content/garbage-collection/rows/garbage-calendar.yaml
+
+

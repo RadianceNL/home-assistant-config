@@ -1,0 +1,85 @@
+type: custom:button-card
+entity: weather.buienradar
+view_layout:
+  grid-area: weathersmall
+entity_picture: /local/weather/sunny.svg
+show_entity_picture: true
+tap_action:
+  action: navigate
+  navigation_path: '#weer'
+extra_styles: |
+  @keyframes card_bounce {
+    0% {
+      transform: scale(1);
+    }
+    15% {
+      transform: scale(0.9);
+    }
+    25% {
+      transform: scale(1);
+    }
+    30% {
+      transform: scale(0.98);
+    }
+    100% {
+  transform: scale(1);
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    .ellipsis  {
+      padding-right: 100px !important;
+    }
+  }
+show_state: false
+show_name: false
+show_label: true
+styles:
+  grid:
+    - grid-template-areas: '"n i" "s i" "l i"'
+    - grid-template-columns: 1fr 45%
+  card:
+    - background: transparent
+    - box-shadow: none
+    - margin-top: '-20px'
+    - '--mdc-ripple-press-opacity': 0
+    - height: 130px
+  icon:
+    - width: 100%
+  custom_fields:
+    temperate:
+      - position: absolute
+      - justify-self: end
+      - padding-right: 125px
+      - font-size: 30px
+      - color: var(--secondary-text-color)
+      - font-weight: bold
+custom_fields:
+  temperate: >
+    [[[ return states['weather.buienradar'].attributes.temperature + ' °c'; ]]]
+state:
+  - value: hail
+    entity_picture: /hacsfiles/themes/waves/hail.svg
+  - value: windy
+    entity_picture: /hacsfiles/themes/waves/windy.svg
+  - value: windy-variant
+    entity_picture: /hacsfiles/themes/waves/windy-variant.svg
+  - value: lightning-rainy
+    entity_picture: /hacsfiles/themes/waves/lightning-rainy.svg
+  - value: lightning
+    entity_picture: /hacsfiles/themes/waves/lightning.svg
+  - value: pouring
+    entity_picture: /hacsfiles/themes/waves/pouring.svg
+  - value: fog
+    entity_picture: /hacsfiles/themes/waves/fog.svg
+  - value: rainy
+    entity_picture: /hacsfiles/themes/waves/rainy.svg
+  - value: clear
+    entity_picture: /hacsfiles/themes/waves/sunny.svg
+  - value: cloudy
+    entity_picture: /hacsfiles/themes/waves/cloudy.svg
+  - value: partlycloudy
+    entity_picture: /hacsfiles/themes/waves/partlycloudy.svg
+  - value: snowy
+    entity_picture: /hacsfiles/themes/waves/snowy.png
+  - value: snowy-rainy
+    entity_picture: /hacsfiles/themes/waves/snowy-rainy.png

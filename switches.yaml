@@ -1,29 +1,5 @@
-# Geluid (mengpaneel aan en uit in juiste volgorde)
-- platform: template
-  switches:
-    geluid:
-      value_template: "{{ is_state('switch.monitorspeakers_socket', 'on') }}"
-      turn_on:
-        service: script.turn_on
-        entity_id: script.geluid_aan
-      turn_off:
-        service: script.turn_on
-        entity_id: script.geluid_uit
-
-    cinema:
-      turn_on:
-        service: script.turn_on
-        entity_id: script.cinema_aan
-      turn_off:
-        service: script.turn_on
-        entity_id: script.cinema_uit
-
-    woonkamer_verlichting:
-      turn_on:
-        service: light.turn_on
-        target:
-          entity_id: group.woonkamer_verlichting
-      turn_off:
-        service: light.turn_off
-        target:
-          entity_id: group.woonkamer_verlichting
+- platform: wake_on_lan
+  name: LG WebOS
+  mac: !secret webos_mac_address
+  host: !secret webos_ip
+  broadcast_address: !secret webos_ip

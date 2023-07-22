@@ -8,6 +8,7 @@ homeassistant:
   elevation: 0
   unit_system: metric
   time_zone: Europe/Amsterdam
+  country: NL
   customize: !include customize.yaml
   external_url: !secret external_url
   internal_url: !secret internal_url
@@ -18,56 +19,40 @@ my:
 ##########################################################################################
 # Default configuration settings                                                         #
 ##########################################################################################
+default_config:
 frontend: # Enables the frontend
   themes: !include_dir_merge_named themes
+  extra_module_url:
+    - /hacsfiles/lovelace-card-mod/card-mod.js
+    - /local/custom.js
 
 http:
   use_x_forwarded_for: true
   trusted_proxies:
-    - 172.30.33.0/24
+    - 192.168.1.253
 
-config: # Enables configuration UI
-updater: #Checks for available updates
 discovery: # Discover some devices automatically
-history: # Enables support for tracking state changes over time
-logbook: # View all events in a logbook
-map: # Enables a map showing the location of tracked devices
-sun: # Track the sun
 wake_on_lan:
 hassio:
+api:
+
 lovelace:
   mode: yaml
   resources: !include /config/resources.yaml
-system_health:
-mobile_app:
-api:
 
 # Includes
-group: !include groups.yaml
 script: !include scripts.yaml
 switch: !include switches.yaml
 google_assistant: !include google_assistant.yaml
-camera: !include cameras.yaml
 sensor: !include sensors.yaml
 automation: !include automations.yaml
 light: !include lights.yaml
-#resources: !include resources.yaml
-input_number: !include input_number.yaml
-
-##########################################################################################
-# Octoprint                                                                              #
-##########################################################################################
-octoprint:
-  host: !secret octoprint_ip
-  api_key: !secret octoprint_api_key
-  bed: true
-  number_of_tools: 2
+template: !include templates.yaml
 
 ##########################################################################################
 # Media players                                                                          #
 ##########################################################################################
 media_player:
-  # Onkyo TX NR-616 versterker
   - platform: onkyo
     name: Onkyo
     host: !secret onkyo_ip
@@ -77,44 +62,12 @@ media_player:
       video6: "PC"
       video3: "Xbox"
 
-##########################################################################################
-# Sensors                                                                                #
-##########################################################################################
-binary_sensor:
-  - platform: octoprint
-    monitored_conditions:
-      - Printing
-      - Printing Error
-
 # Log settings
 logger:
   default: error
-
-# Weer
-weather:
-  - platform: darksky
-    api_key: !secret darksky_api_key
-    mode: daily
-
-input_boolean:
-  prusa_off_when_finished:
-    name: Prusa uit als print klaar is
-    initial: off
-    icon: mdi:printer-3d-nozzle
-  eliane:
-    name: Eliane
-    initial: on
-  jeroen:
-    name: Jeroen
-    initial: on
-
-mqtt:
-  broker: core-mosquitto # This will have to be your mqtt broker, Mosquitto addon is recommended.
-  discovery: true
-
-spotify:
-  client_id: !secret spotify_client_id
-  client_secret: !secret spotify_client_secret
+  logs:
+    rflink: debug
+    homeassistant.components.rflink: debug
 
 influxdb:
   host: !secret influxdb_ip
@@ -135,6 +88,7 @@ recorder:
       - light
       - media_player
       - switch
+      - climate
     entities:
       - sensor.energy_consumption_tarif_1
       - sensor.energy_consumption_tarif_1_cost
@@ -145,26 +99,13 @@ recorder:
       - sensor.woonkamer_temperatuursensor_humidity
       - sensor.woonkamer_temperatuursensor_pressure
       - sensor.woonkamer_temperatuursensor_temperature
-
-webostv:
-  host: !secret webos_ip
-  name: Woonkamer TV
-  turn_on_action:
-    service: wake_on_lan.send_magic_packet
-    data:
-      mac: !secret webos_mac_address
-      broadcast_address: !secret webos_ip
-
-telegram_bot:
-  - platform: polling
-    api_key: !secret telegram_api_key
-    allowed_chat_ids:
-      - !secret telegram_chat_id
+      - sensor.woonkamer_humidity
+      - sensor.woonkamer_temperature
 
 notify:
-  - platform: telegram
-    name: !secret telegram_bot_name
-    chat_id: !secret telegram_chat_id
+  - platform: webostv
+    host: !secret webos_ip
+    name: woonkamer_tv
 
 utility_meter:
   daily_energy_offpeak:
@@ -191,3 +132,17 @@ utility_meter:
     source: sensor.gas_consumption
     name: Monthly Gas
     cycle: monthly
+
+tts:
+  - platform: google_translate
+    service_name: google_say
+
+rflink:
+  port: /dev/ttyACM2
+
+cover:
+  - platform: rflink
+    devices:
+      RTS_0A0A0A_0:
+        name: Zonwering tuin
+

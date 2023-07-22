@@ -1,0 +1,55 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Open Media Vault
+    content:
+      type: custom:vertical-stack-in-card
+      cards:
+        - type: vertical-stack
+          cards:
+            # # Storage
+            - type: custom:bar-card
+              title: Storage (mergerfs)
+              positions:
+                name: inside
+                icon: inside
+              show_icon: true
+              align: split
+              padding: 4px
+              card_style:
+                border-radius: 5px
+              columns: 2
+              entities:
+                - entity: sensor.omv_total_storage
+                  attribute: Available
+                  unit_of_measurement: GB
+                  name: Available
+                  icon: mdi:harddisk
+                  color: "#bf4040" #RED
+                  max: 14784.6
+                  severity:
+                    - color: "#bf4040" #RED
+                      from: 0
+                      to: 680
+                    - color: "#bf9540" #YELLOW
+                      from: 681
+                      to: 1699
+                    - color: "#1db954" #GREEN
+                      from: 1700
+                      to: 14784.6
+                - entity: sensor.omv_total_storage
+                  name: Used
+                  icon: mdi:harddisk
+                  color: "#bf4040"
+                  max: 100
+                  severity:
+                    - color: "#1db954" #GREEN
+                      from: 0
+                      to: 75
+                    - color: "#bf9540" #YELLOW
+                      from: 76
+                      to: 90
+                    - color: "#bf4040" #RED
+                      from: 91
+                      to: 100

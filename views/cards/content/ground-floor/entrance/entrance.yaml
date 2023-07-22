@@ -1,0 +1,25 @@
+type: custom:multiple-entity-row
+entity: light.schakelaar_entree
+tap_action:
+  action: toggle
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:door
+name: Entree
+show_state: false
+secondary_info:
+  entity: sensor.rookmelder_bg_temperature
+  name: false
+entities:
+  - entity: light.schakelaar_entree
+    icon: mdi:ceiling-light
+    name: false
+    state_color: true
+    tap_action:
+      action: toggle

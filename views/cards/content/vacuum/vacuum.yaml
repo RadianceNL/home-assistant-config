@@ -1,0 +1,42 @@
+type: custom:vacuum-card
+entity: vacuum.mi_robot_vacuum_1s
+name: Xiaomi 1S
+show_toolbar: true
+style: |
+  ha-card .preview {
+    background: rgb(0,0,0,0);
+  }
+  .toolbar{
+    background-color: rgb(0,0,0,0) !important;
+    color: white !important;
+  }
+  ha-card .toolbar ha-icon {
+    color: white !important;
+  }
+  ha-card .toolbar paper-button {
+    color: white !important;
+  }
+  ha-card .toolbar ha-icon-button {
+    color: white !important;
+  }
+stats:
+  default:
+    - attribute: filter_left
+      unit: uur
+      subtitle: Filter
+    - attribute: side_brush_left
+      unit: uur
+      subtitle: Side brush
+    - attribute: main_brush_left
+      unit: uur
+      subtitle: Main brush
+    - attribute: sensor_dirty_left
+      unit: uur
+      subtitle: Sensors
+  cleaning:
+    - attribute: cleaned_area
+      unit: m2
+      subtitle: Gebied
+    - attribute: cleaning_time
+      unit: minuten
+      subtitle: Schoonmaak tijd

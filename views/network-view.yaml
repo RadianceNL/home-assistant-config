@@ -1,7 +1,0 @@
-title: Netwerk monitoring
-icon: mdi:network
-cards:
-  - !include /config/views/cards/network/proxmox-card.yaml
-  - !include /config/views/cards/network/cisco-switch-card.yaml
-  - !include /config/views/cards/network/unifi-card.yaml
-  - !include /config/views/cards/network/zigbee-card.yaml
