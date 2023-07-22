@@ -1,0 +1,19 @@
+type: custom:button-card
+entity: sensor.time
+show_state: true
+show_icon: false
+show_name: false
+view_layout:
+  grid-area: clock
+styles:
+  card:
+    - background-color: transparent
+    - height: 80px
+    - box-shadow: none
+  state:
+    - font-size: 30px
+    - color: var(--secondary-text-color)
+    - position: absolute
+    - bottom: 10px
+    - font-weight: bold
+    - justify-self: start

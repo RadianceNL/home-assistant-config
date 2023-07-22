@@ -1,0 +1,28 @@
+type: custom:multiple-entity-row
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+entity: sun.sun
+icon: mdi:spa
+name: Voortuin
+show_state: false
+secondary_info:
+  entity: sensor.woonkamer_temperature
+  name: false
+entities:
+  - entity: light.socket_voortuin_voordeur_lamp
+    icon: mdi:coach-lamp
+    name: false
+    state_color: true
+    tap_action:
+      action: toggle
+  - entity: camera.frigate_voortuin
+    icon: mdi:cctv
+    name: false
+    state_color: true
+    tap_action: !include /config/views/cards/content/ground-floor/front-garden/popups/frontdoor-camera.yaml

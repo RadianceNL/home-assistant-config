@@ -1,0 +1,64 @@
+type: vertical-stack
+cards:
+  - type: entities
+    entities:
+      - entity: sensor.prusa_mk3s_print_status
+        type: custom:multiple-entity-row
+        style:
+          hui-generic-entity-row:
+            $: |
+              @media only screen and (max-width: 600px) {
+                state-badge {
+                  display: none !important;
+                }
+              }
+        icon: mdi:printer-3d
+        name: Prusa MK3S
+        state_color: true
+        show_state: false
+        tap_action: !include /config/views/cards/content/3d-printer/popups/3d-printer-card.yaml
+        secondary_info:
+          entity: sensor.prusa_mk3s_print_status
+          name: false
+        entities:
+          - entity: light.z2m_group_verlichting_hobbykamer_werkbank
+            icon: mdi:lightbulb
+            name: false
+            state_color: true
+            tap_action: # !include /config/views/cards/content/3d-printer/popups/3d-printer-lights.yaml # Prusa enclosure lights
+              action: toggle
+
+          - entity: sensor.prusa_mk3s_print_progress
+            name: Voortgang
+          - entity: sensor.prusa_mk3s_print_time_left
+            name: Tijd over
+            state_color: true
+          - entity: sensor.prusa_mk3s_print_time
+            name: Verstreken
+          - entity: sensor.prusa_mk3s_bed_target
+            name: Bed tar
+          - entity: sensor.prusa_mk3s_tool_0_target
+            name: Nozzle tar
+
+  - type: picture-glance
+    card_mod:
+      style: |
+        ha-card {
+          border-radius: 10px;
+          font-size: 15px !important;
+          --ha-card-background: rgb(0,0,0,0.2);
+          --mdc-icon-size: 30px !important;
+          --paper-item-icon-active-color: rgba(255, 255, 255, 1);
+          --paper-item-icon-color: rgba(255, 255, 255, 0.3);
+        }
+        @media only screen and (max-width: 600px) {
+          ha-card {
+            width: 96vw;
+            font-size: 12px !important;
+          --mdc-icon-size: 20px !important;
+          }
+        }
+    entities: []
+    camera_image: camera.frigate_prusa_mk3s
+    camera_view: live
+    tap_action: !include /config/views/cards/content/3d-printer/popups/3d-printer-lights.yaml # Prusa enclosure lights

@@ -1,9 +1,7 @@
-- platform: octoprint
-  name: OctoPrint
-  monitored_conditions:
-    - Current State
-    - Temperatures
-    - Job Percentage
+- platform: time_date
+  display_options:
+    - date_time_iso
+    - time
 
 #############################################################################
 #                          Netdata                                          #
@@ -245,18 +243,12 @@
           {%- endif -%}
         {%- endif -%}
 
-- platform: mqtt
-  name: Bridge state
-  state_topic: "zigbee2mqtt/bridge/state"
-  icon: mdi:router-wireless
-
 #############################################################################
 #                          SNMP                                             #
 #############################################################################
+
 ###########################################
-
 #             Cisco SG250 26HP            #
-
 ###########################################
 - platform: snmp
   host: 192.168.1.254
@@ -590,11 +582,33 @@
         {%- else -%}
           2
       {%- endif -%}
+- platform: snmp
+  name: Cisco Port 25
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.25
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
+- platform: snmp
+  name: Cisco Port 26
+  host: 192.168.1.254
+  community: homeassistant
+  baseoid: 1.3.6.1.2.1.2.2.1.8.26
+  value_template: >-
+    {% set data = (value | int) | int %}
+      {%- if data == 1 -%}
+        1
+        {%- else -%}
+          2
+      {%- endif -%}
 
 ###########################################
-
 #             Ubiquiti AC Pro             #
-
 ###########################################
 
 - platform: snmp
@@ -639,38 +653,40 @@
   community: public
   baseoid: 1.3.6.1.2.1.25.3.3.1.2.196608
 
-########## Connected clients ###############
+######### Connected clients ###############
 - platform: snmp
-  name: Unifi AC Pro Radiance clients 2.4ghz
+  name: Unifi AC Pro Aqrox clients 2.4ghz
   unit_of_measurement: "clients"
   host: 192.168.1.50
   baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.1
 - platform: snmp
-  name: Unifi AC Pro Radiance clients 5ghz
+  name: Unifi AC Pro Aqrox clients 5ghz
   unit_of_measurement: "clients"
   host: 192.168.1.50
   baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.4
-- platform: snmp
-  name: Unifi AC Pro RadianceIOT clients 2.4ghz
-  unit_of_measurement: "clients"
-  host: 192.168.1.50
-  baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.3
-- platform: snmp
-  name: Unifi AC Pro RadianceIOT clients 5ghz
-  unit_of_measurement: "clients"
-  host: 192.168.1.50
-  baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.6
-- platform: snmp
-  name: Unifi AC Pro RadianceKinderen clients 2.4ghz
-  unit_of_measurement: "clients"
-  host: 192.168.1.50
-  baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.2
-- platform: snmp
-  name: Unifi AC Pro RadianceKinderen clients 5ghz
-  unit_of_measurement: "clients"
-  host: 192.168.1.50
-  baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.5
-  # Totaal
+
+# - platform: snmp
+#   name: Unifi AC Pro RadianceIOT clients 2.4ghz
+#   unit_of_measurement: "clients"
+#   host: 192.168.1.50
+#   baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.3
+# - platform: snmp
+#   name: Unifi AC Pro RadianceIOT clients 5ghz
+#   unit_of_measurement: "clients"
+#   host: 192.168.1.50
+#   baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.6
+# - platform: snmp
+#   name: Unifi AC Pro RadianceKinderen clients 2.4ghz
+#   unit_of_measurement: "clients"
+#   host: 192.168.1.50
+#   baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.2
+# - platform: snmp
+#   name: Unifi AC Pro RadianceKinderen clients 5ghz
+#   unit_of_measurement: "clients"
+#   host: 192.168.1.50
+#   baseoid: 1.3.6.1.4.1.41112.1.6.1.2.1.8.5
+
+# Totaal
 - platform: template
   sensors:
     unifi_ac_pro_total_clients:
@@ -678,4 +694,35 @@
       value_template: >-
         {{ (states.sensor.unifi_ac_pro_radiance_clients_2_4ghz.state | int) + (states.sensor.unifi_ac_pro_radiance_clients_5ghz.state | int) + (states.sensor.unifi_ac_pro_radianceiot_clients_2_4ghz.state | int) + (states.sensor.unifi_ac_pro_radianceiot_clients_5ghz.state | int) + (states.sensor.unifi_ac_pro_radiancekinderen_clients_2_4ghz.state | int) + (states.sensor.unifi_ac_pro_radiancekinderen_clients_5ghz.state | int)}}
 
-- platform: dsmr_reader
+####### NEST Template sensors ##############
+- platform: template
+  sensors:
+    nest_thermostat_status:
+      value_template: >-
+        {{ state_attr('climate.woonkamer', 'hvac_action') }}
+
+########## Afval info #############
+- platform: afvalinfo
+  id: thuis
+  resources:
+    - type: gft
+      friendly_name: GFT
+    - type: papier
+      friendly_name: Papier
+    - type: restafval
+      friendly_name: Restafval
+    - type: trash_type_today
+      friendly_name: Afval voor vandaag
+    - type: trash_type_tomorrow
+      friendly_name: Afval voor morgen
+  location: westland
+  postcode: 2681PT
+  streetnumber: 36
+  dateformat: "%d-%m-%Y"
+  locale: "nl"
+  timespanindays: 365
+  notrashtext: "geen"
+  getwholeyear: true
+
+- platform: rflink
+  automatic_add: true

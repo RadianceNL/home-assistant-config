@@ -1,0 +1,13 @@
+project_id: !secret google_assistant_project_id
+service_account: !include HomeAssistant-GoogleAssistant.json
+report_state: true
+secure_devices_pin: !secret google_assistant_device_pin
+exposed_domains:
+  - light
+  - sensor
+  - media_player
+  - vacuum
+  - binary_sensor
+entity_config:
+  media_player.onkyo:
+    name: Versterker

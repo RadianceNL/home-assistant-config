@@ -1,0 +1,85 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data: 
+    title: Prusa MK3S
+    content:
+      type: custom:vertical-stack-in-card
+      cards:
+        # Enclosure sensors
+        - type: horizontal-stack
+          cards:
+            - type: custom:button-card
+              entity: switch.socket_prusa
+              name: Prusa MK3S+
+              confirmation:
+                text: "[[[ return `Weet je zeker dat ${entity.attributes.friendly_name} aan of uit moet?` ]]]"
+              color_type: label-card
+              color: rgb(255, 77, 77)
+              lock:
+              size: 10%
+              styles:
+                card:
+                  - font-weight: bold
+              state:
+                - value: "on"
+                  styles:
+                    state:
+                      - color: rgb(44, 109, 214)
+            - type: "custom:button-card"
+              entity: switch.prusa_mk3s_connect_to_printer
+              name: Verbinden
+              confirmation:
+                text: "[[[ return `Weet je zeker dat je de printer wilt verbinden/verbreken?` ]]]"
+              color_type: label-card
+              color: rgb(255, 123, 0)
+              lock:
+              size: 10%
+              styles:
+                card:
+                  - font-weight: bold
+              state:
+                - value: "on"
+                  name: Verbonden
+                  styles:
+                    state:
+                      - color: rgb(44, 109, 214)
+        - type: horizontal-stack
+          cards:
+            - type: entities
+              entities:
+                - entity: sensor.prusa_mk3s_print_status
+                  name: Status
+                - entity: sensor.prusa_mk3s_print_progress
+                  name: Voortgang
+                - entity: sensor.prusa_mk3s_print_time
+                  name: Tijd verstreken
+                - entity: sensor.prusa_mk3s_print_time_left
+                  name: Overgebleven tijd
+                - entity: sensor.prusa_mk3s_bed_target
+                  name: Doel temperatuur bed
+                - entity: sensor.prusa_mk3s_tool_0_target
+                  name: Doel temperatuur hotend
+        - type: horizontal-stack
+          cards:
+            # Huidige bed temperatuur
+            - type: custom:mini-graph-card
+              name: Bed temperatuur
+              entities:
+                - sensor.prusa_mk3s_bed_temperature
+              line_color: orange
+              line_width: 8
+              font_size: 50
+            # Huidige hotend temperatuur
+            - type: custom:mini-graph-card
+              name: Hotend temperatuur
+              entities:
+                - sensor.prusa_mk3s_tool_0_temperature
+              line_color: red
+              line_width: 8
+              font_size: 50
+        - type: horizontal-stack
+          cards:
+            - type: entities
+              entities:
+                - entity: input_boolean.prusa_off_when_finished

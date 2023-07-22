@@ -1,0 +1,26 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Magnetron
+    style: |
+      :host {
+        --ha-card-box-shadow: none;
+      }
+    # style: |
+    #   :host {
+    #     --ha-card-box-shadow: none;
+    #     --mdc-theme-surface: rgb(26, 40, 55, 0.8);
+    #     --ha-card-background: rgb(26, 40, 55, 0.2);
+    #     --secondary-background-color: rgb(26, 40, 55, 0.8);
+    #   }
+    content:
+      type: entities
+      entities:
+        - switch.magnetron_power
+        - switch.magnetron_program_600watt
+        - switch.magnetron_program_preheating
+        - sensor.magnetron_operation_state
+        - sensor.magnetron_duration
+        - sensor.magnetron_remaining_program_time
+        - binary_sensor.magnetron_door

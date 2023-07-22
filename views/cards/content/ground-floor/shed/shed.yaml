@@ -1,0 +1,21 @@
+type: custom:multiple-entity-row
+entity: sensor.schuur_temperatuur
+tap_action:
+  action: more-info
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:garage
+name: Schuur
+show_state: false
+secondary_info:
+  entity: sensor.schuur_temperatuur
+  name: false
+entities:
+  - entity: sensor.schuur_luchtvochtigheid
+    name: Luchtvochtigheid

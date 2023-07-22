@@ -1,5 +1,0 @@
-type: horizontal-stack
-cards:
-  - type: custom:weather-card
-    entity: weather.buienradar
-    name: Weer

@@ -1,0 +1,66 @@
+type: custom:multiple-entity-row
+entity: light.ha_group_woonkamer_verlichting
+tap_action:
+  action: toggle
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:home-floor-b
+name: Woonkamer
+show_state: false
+state_color: true
+secondary_info:
+  entity: sensor.woonkamer_temperature
+  name: false
+
+entities:
+  - entity: sensor.woonkamer_humidity
+    name: humidity
+
+  - entity: climate.woonkamer
+    name: false
+    icon: mdi:thermostat
+    state_color: true
+    tap_action: !include /config/views/cards/content/ground-floor/living-room/popups/thermostat.yaml # Living room lights popup
+
+  - entity: switch.socket_monitorspeakers
+    icon: mdi:speaker
+    name: false
+    state_color: true
+    tap_action:
+      action: toggle
+
+  - entity: light.ha_group_woonkamer_verlichting
+    icon: mdi:lamps
+    name: false
+    state_color: true
+    tap_action: !include /config/views/cards/content/ground-floor/living-room/popups/living-room-lights.yaml # Living room lights popup
+
+  - entity: media_player.woonkamer_tv
+    icon: mdi:television
+    name: false
+    state_color: true
+
+  - entity: media_player.onkyo
+    icon: mdi:record-player
+    name: false
+    state_color: true
+
+  - entity: input_boolean.cinema
+    icon: mdi:theater
+    name: false
+    state_color: true
+    tap_action:
+      action: toggle
+      
+  - entity: input_boolean.bright_light
+    icon: mdi:brightness-7
+    name: false
+    state_color: true
+    tap_action:
+      action: toggle

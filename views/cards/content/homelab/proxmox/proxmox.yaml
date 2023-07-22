@@ -1,0 +1,36 @@
+type: custom:multiple-entity-row
+entity: sensor.proxmox_uptime
+tap_action: !include /config/views/cards/content/homelab/proxmox/popups/proxmox.yaml
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:server
+name: Proxmox
+show_state: false
+secondary_info:
+  entity: sensor.netdata_proxmox_cpu_temperatuur
+  name: false
+entities:
+  - entity: sensor.socket_server_power
+    name: Pwr
+    state: true
+  - entity: sensor.proxmox_cpu_load
+    name: CPU
+    state: true
+  - entity: sensor.netdata_proxmox_ram_used
+    name: RAM used
+    state: true
+  - entity: sensor.netdata_proxmox_ram_free
+    name: RAM free
+    state: true
+  - entity: sensor.proxmox_mbps_out
+    name: Up
+    state: true
+  - entity: sensor.proxmox_mbps_in
+    name: Down
+    state: true

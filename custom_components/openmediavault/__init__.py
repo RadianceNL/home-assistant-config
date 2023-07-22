@@ -1,47 +1,48 @@
 """The OpenMediaVault integration."""
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryNotReady
 
-from .const import DATA_CLIENT, DOMAIN
+from .const import DOMAIN, PLATFORMS
 from .omv_controller import OMVControllerData
-from homeassistant.const import CONF_HOST
+
 
 # ---------------------------
 #   async_setup
 # ---------------------------
-async def async_setup(hass, _config):
+async def async_setup(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Set up configured OMV Controller."""
     hass.data[DOMAIN] = {}
-    hass.data[DOMAIN][DATA_CLIENT] = {}
     return True
+
+
+# ---------------------------
+#   update_listener
+# ---------------------------
+async def _async_update_listener(hass: HomeAssistant, config_entry: ConfigEntry):
+    """Handle options update."""
+    await hass.config_entries.async_reload(config_entry.entry_id)
 
 
 # ---------------------------
 #   async_setup_entry
 # ---------------------------
-async def async_setup_entry(hass, config_entry):
+async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Set up OMV config entry."""
+    hass.data.setdefault(DOMAIN, {})
     controller = OMVControllerData(hass, config_entry)
     await controller.async_hwinfo_update()
     await controller.async_update()
+
+    if not controller.data:
+        raise ConfigEntryNotReady()
+
     await controller.async_init()
+    hass.data[DOMAIN][config_entry.entry_id] = controller
 
-    hass.data[DOMAIN][DATA_CLIENT][config_entry.entry_id] = controller
-    hass.async_create_task(
-        hass.config_entries.async_forward_entry_setup(config_entry, "sensor")
-    )
-    hass.async_create_task(
-        hass.config_entries.async_forward_entry_setup(config_entry, "binary_sensor")
-    )
-    # hass.async_create_task(
-    #     hass.config_entries.async_forward_entry_setup(config_entry, "switch")
-    # )
-
-    device_registry = await hass.helpers.device_registry.async_get_registry()
-    device_registry.async_get_or_create(
-        config_entry_id=config_entry.entry_id,
-        connections={(DOMAIN, config_entry.data[CONF_HOST])},
-        manufacturer="OpenMediaVault",
-        name=controller.data["hwinfo"]["hostname"],
-        sw_version=controller.data["hwinfo"]["version"],
+    await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
+    config_entry.async_on_unload(
+        config_entry.add_update_listener(_async_update_listener)
     )
 
     return True
@@ -50,12 +51,14 @@ async def async_setup_entry(hass, config_entry):
 # ---------------------------
 #   async_unload_entry
 # ---------------------------
-async def async_unload_entry(hass, config_entry):
-    """Unload OMV config entry."""
-    controller = hass.data[DOMAIN][DATA_CLIENT][config_entry.entry_id]
-    await hass.config_entries.async_forward_entry_unload(config_entry, "sensor")
-    await hass.config_entries.async_forward_entry_unload(config_entry, "binary_sensor")
-    # await hass.config_entries.async_forward_entry_unload(config_entry, "switch")
-    await controller.async_reset()
-    hass.data[DOMAIN][DATA_CLIENT].pop(config_entry.entry_id)
+async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
+    """Unload TrueNAS config entry."""
+    unload_ok = await hass.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
+    )
+    if unload_ok:
+        controller = hass.data[DOMAIN][config_entry.entry_id]
+        await controller.async_reset()
+        hass.data[DOMAIN].pop(config_entry.entry_id)
+
     return True

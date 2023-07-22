@@ -1,0 +1,9 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Deurbel camera
+    content:
+      type: picture-glance
+      entities: []
+      camera_image: camera.deurbel

@@ -1,0 +1,28 @@
+type: custom:multiple-entity-row
+entity: sensor.solaredge_current_power
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:solar-power
+name: Opbrengst
+state_color: true
+show_state: false
+# tap_action: !include /config/views/tablet/cards/content/energy/popups/returned.yaml
+secondary_info:
+  entity: sensor.solaredge_current_power
+  name: false
+entities:
+  - entity: sensor.solaredge_energy_today
+    name: Opgewekt
+    state_color: true
+  - entity: sensor.dsmr_day_consumption_electricity1_returned
+    name: Dal terug
+  - entity: sensor.dsmr_day_consumption_electricity2_returned
+    name: Piek terug
+  - entity: sensor.dsmr_day_consumption_electricity_returned_merged
+    name: Totaal terug

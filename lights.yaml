@@ -1,44 +1,58 @@
-##########################################################################################
-# LED Strips                                                                             #
-##########################################################################################
-# Hyperion
-# - platform: hyperion
-  # host: 192.168.178.41
-  # port: 19444
-  # name: ambilight
-
-
-# Planfond lamp woonkamer
-#- platform: yeelight
-#  devices:
-#    192.168.20.40:
-#      name: Woonkamer plafondlamp
-#      transition: 1000
-#      save_on_change: True
-
 - platform: group
   name: Hong Kong Spots
   entities:
-    - light.hongkong_spot_1
-    - light.hongkong_spot_2
-    - light.hongkong_spot_3
-    
-# - platform: group
-#   name: Slaapkamer spots
-#   entities:
-#     - light.slaapkamer_spot_1
-#     - light.slaapkamer_spot_2
-#     - light.slaapkamer_spot_3
-    
-# - platform: group
-#   name: Keukenverlichting
-#   entities:
-#     - light.aanrecht_verlichting
-#     - light.gasfornuis_verlichting
+    - light.hong_kong_spot_1
+    - light.hong_kong_spot_2
+    - light.hong_kong_spot_3
 
 - platform: group
-  name: Werkbank
+  name: Slaapkamer spots
   entities:
-    - light.wled_werkbank_laag
+    - light.slaapkamer_spot_1
+    - light.slaapkamer_spot_2
+    - light.slaapkamer_spot_3
+
+# - platform: group
+#   name: ha_group_kookeiland
+#   entities:
+#     - light.verlichting_keuken_kookeiland_1
+#     - light.verlichting_keuken_kookeiland_2
+#     - light.verlichting_keuken_kookeiland_3
+
+- platform: group
+  name: ha_group_keukenverlichting
+  entities:
+    - light.dimmer_keuken
+    - light.z2m_group_kookeiland
+    - light.verlichting_keuken_werkblad
+
+- platform: group
+  name: ha_group_hobbykamer_werkbank
+  entities:
+    - light.verlichting_hobbykamer_werkbank_1
+    - light.verlichting_hobbykamer_werkbank_2
     # - light.wled_werkbank_pegboard_1
     # - light.wled_werkbank_plank
+
+- platform: group
+  name: ha_group_hobbykamer
+  entities:
+    - light.dimmer_hobbykamer
+    - light.ha_group_hobbykamer_werkbank
+
+- platform: group
+  name: ha_group_woonkamer_verlichting
+  entities:
+    # - light.wled_lithophane
+    - light.hong_kong_spot_1
+    - light.hong_kong_spot_2
+    - light.hong_kong_spot_3
+    # - light.socket_woonkamer_staande_lamp
+    - light.socket_philips_mood_light
+    - light.wled_bank
+    - light.wled_bureau_woonkamer
+    - light.wled_bureau_speaker_stands
+    - light.wled_tv_meubel
+
+- platform: rflink
+  automatic_add: true

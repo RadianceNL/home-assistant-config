@@ -1,0 +1,40 @@
+type: custom:multiple-entity-row
+entity: sensor.afvalinfo_thuis_afval_voor_vandaag
+tap_action:
+  action: toggle
+style:
+  hui-generic-entity-row:
+    $: |
+      state-badge {
+        {% if is_state("sensor.afvalinfo_thuis_afval_voor_vandaag", "gft") %}
+          color: rgb(0, 204, 102);
+        {% elif is_state("sensor.afvalinfo_thuis_afval_voor_vandaag", "restafval") %}
+          color: rgb(252, 249, 249);
+        {% elif is_state("sensor.afvalinfo_thuis_afval_voor_vandaag", "papier") %}
+          color: rgb(0, 161, 255)
+        {% endif %}
+      }
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:recycle
+name: Vandaag
+show_state: false
+secondary_info:
+  entity: sensor.afvalinfo_thuis_afval_voor_vandaag
+  name: false
+entities:
+  - entity: sensor.afvalinfo_thuis_afval_voor_morgen
+    card_mod:
+      style: |
+        state-badge {
+          {% if is_state("sensor.afvalinfo_thuis_afval_voor_morgen", "gft") %}
+            color: rgb(0, 204, 102);
+          {% elif is_state("sensor.afvalinfo_thuis_afval_voor_morgen", "restafval") %}
+            color: rgb(252, 249, 249);
+          {% elif is_state("sensor.afvalinfo_thuis_afval_voor_morgen", "papier") %}
+            color: rgb(0, 161, 255)
+          {% endif %}
+        }

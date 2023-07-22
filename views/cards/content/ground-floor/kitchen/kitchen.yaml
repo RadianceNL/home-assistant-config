@@ -1,0 +1,39 @@
+type: custom:multiple-entity-row
+entity: light.keukenverlichting
+tap_action:
+  action: toggle
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:countertop
+name: Keuken
+show_state: false
+secondary_info:
+  entity: sensor.woonkamer_temperature
+  name: false
+entities:
+  - entity: sensor.woonkamer_humidity
+    name: humidity
+  - entity: binary_sensor.magnetron_door
+    icon: mdi:microwave
+    name: false
+    tap_action: !include /config/views/cards/content/ground-floor/kitchen/popups/microwave.yaml # Microwave popup
+  - entity: binary_sensor.oven_door
+    icon: mdi:stove
+    name: false
+    tap_action: !include /config/views/cards/content/ground-floor/kitchen/popups/stove.yaml # Stove popup
+  - entity: binary_sensor.vaatwasser_door
+    icon: mdi:dishwasher
+    name: false
+    tap_action: !include /config/views/cards/content/ground-floor/kitchen/popups/dishwasher.yaml # Dishwasher popup
+  - entity: light.ha_group_keukenverlichting
+    icon: mdi:lamps
+    name: false
+    state_color: true
+    tap_action: !include /config/views/cards/content/ground-floor/kitchen/popups/kitchen-lights.yaml # Kitchen lights popup
+

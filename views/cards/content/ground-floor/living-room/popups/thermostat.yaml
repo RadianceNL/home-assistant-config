@@ -1,0 +1,7 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    content:
+      type: thermostat
+      entity: climate.woonkamer

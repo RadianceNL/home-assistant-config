@@ -1,8 +1,0 @@
-type: vertical-stack
-cards:
-  - type: energy-date-selection
-  - type: energy-usage-graph
-  - type: energy-usage-graph
-  - type: energy-solar-graph
-  - type: energy-gas-graph
-  

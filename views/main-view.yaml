@@ -1,14 +1,88 @@
-###################### Homepage ###################################
-title: Thuis
-icon: mdi:home
+title: Home
+icon: mdi:tablet
+path: tablet_mode
+type: custom:grid-layout
+layout:
+  display: grid
+  grid-template-columns: auto 250px 250px 250px auto
+  grid-template-rows: 60px 25px 150px 40px 30px auto
+  grid-gap: 5px
+  grid-template-areas: |
+    " . clock . weathersmall ."
+    " . clockinfo clockinfo weatherinfo . "
+    " . personcard1 . personcard2 . "
+    " . buttonrow buttonrow buttonrow ."
+    " . contenttitle contenttitle contenttitle . "
+    " . contentrow contentrow contentrow . "
+  mediaquery:
+    "(max-width: 600px)":
+      grid-template-columns: 50% 50%
+      grid-template-rows: 60px 25px 150px 30px 30px auto
+      grid-gap: 5px
+      grid-template-areas: |
+        " clock weathersmall "
+        " clockinfo weatherinfo "
+        " personcard1 personcard2 "
+        " buttonrow buttonrow "
+        " contenttitle contenttitle "
+        " contentrow contentrow "
+
 cards:
-  - !include /config/views/cards/woonkamer/weather-card.yaml
-  - !include /config/views/cards/woonkamer/persons-card.yaml
-  - !include /config/views/cards/woonkamer/woonkamer-card.yaml
-  - !include /config/views/cards/woonkamer/mediaplayers-card.yaml
-  - !include /config/views/cards/eetkamer/eetkamer-card.yaml
-  - !include /config/views/cards/slaapkamer/slaapkamer-card.yaml
-  - !include /config/views/cards/woonkamer/stofzuiger-card.yaml
-  - !include /config/views/cards/keuken/keuken-card.yaml
-  - !include /config/views/cards/badkamer/badkamer-card.yaml
-  - !include /config/views/cards/kantoor/prusa-mk3s-card.yaml
+  # WEATHER & TIME
+  - !include /config/views/cards/weather/weather-small.yaml
+  - !include /config/views/cards/weather/weather-info.yaml
+
+  - !include /config/views/cards/time/time.yaml
+  - !include /config/views/cards/time/date.yaml
+
+  # MAIN INFO CARDS
+  - !include /config/views/cards/persons/person1.yaml
+  - !include /config/views/cards/persons/person2.yaml
+
+  # BUTTON ROW
+  - type: horizontal-stack
+    view_layout:
+      grid-area: buttonrow
+    cards:
+      - !include /config/views/cards/button-row/ground-floor.yaml
+      - !include /config/views/cards/button-row/first-floor.yaml
+      - !include /config/views/cards/button-row/second-floor.yaml
+      - !include /config/views/cards/button-row/garbage-collection.yaml
+      - !include /config/views/cards/button-row/3d-printer.yaml
+      - !include /config/views/cards/button-row/vacuum.yaml
+      - !include /config/views/cards/button-row/homelab.yaml
+      - !include /config/views/cards/button-row/energy.yaml
+
+  # CONTENT TITLES
+  - type: custom:state-switch
+    entity: hash
+    default: begane-grond
+    view_layout:
+      grid-area: contenttitle
+    states:
+      begane-grond: !include /config/views/cards/content-title/ground-floor.yaml
+      1e-etage: !include /config/views/cards/content-title/first-floor.yaml
+      2e-etage: !include /config/views/cards/content-title/second-floor.yaml
+      afvalinzameling: !include /config/views/cards/content-title/garbage-collection.yaml
+      weer: !include /config/views/cards/content-title/weather.yaml
+      prusa-mk3s: !include /config/views/cards/content-title/3d-printer.yaml
+      vacuum: !include /config/views/cards/content-title/vacuum.yaml
+      homelab: !include /config/views/cards/content-title/homelab.yaml
+      energy: !include /config/views/cards/content-title/energy.yaml
+
+  # CONTENT
+  - type: custom:state-switch
+    entity: hash
+    default: begane-grond
+    view_layout:
+      grid-area: contentrow
+    states:
+      begane-grond: !include /config/views/cards/content/ground-floor/ground-floor.yaml
+      1e-etage: !include /config/views/cards/content/first-floor/first-floor.yaml
+      2e-etage: !include /config/views/cards/content/second-floor/second-floor.yaml
+      afvalinzameling: !include /config/views/cards/content/garbage-collection/garbage-collection.yaml
+      weer: !include /config/views/cards/content/weather/weather.yaml
+      prusa-mk3s: !include /config/views/cards/content/3d-printer/3d-printer.yaml
+      vacuum: !include /config/views/cards/content/vacuum/vacuum.yaml
+      homelab: !include /config/views/cards/content/homelab/homelab.yaml
+      energy: !include /config/views/cards/content/energy/energy.yaml

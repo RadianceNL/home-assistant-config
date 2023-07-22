@@ -1,0 +1,21 @@
+type: custom:button-card
+view_layout:
+  grid-area: weatherinfo
+tap_action:
+  action: navigate
+  navigation_path: '#weer'
+show_icon: false
+show_name: false
+show_state: true
+entity: sensor.weather_dutch
+styles:
+  card:
+    - background-color: transparent
+    - height: 25px
+    - box-shadow: none
+  state:
+    - font-size: 15px
+    - color: var(--secondary-text-color)
+    - font-weight: normal
+    - justify-self: end
+    - padding-right: 125px

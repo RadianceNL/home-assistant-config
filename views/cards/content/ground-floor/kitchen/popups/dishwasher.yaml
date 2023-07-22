@@ -1,0 +1,50 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Vaatwasser
+    style: |
+      :host {
+        --ha-card-box-shadow: none;
+      }
+    # style: |
+    #   :host {
+    #     --ha-card-box-shadow: none;
+    #     --mdc-theme-surface: rgb(26, 40, 55, 0.8);
+    #     --ha-card-background: rgb(26, 40, 55, 0.2);
+    #     --secondary-background-color: rgb(26, 40, 55, 0.8);
+    #   }
+    content:
+      type: entities
+      entities:
+        - switch.vaatwasser_power
+        - switch.vaatwasser_program_auto1
+        - switch.vaatwasser_program_auto2
+        - switch.vaatwasser_program_auto3
+        # - switch.vaatwasser_program_autohalfload
+        - switch.vaatwasser_program_glas40
+        - switch.vaatwasser_program_eco50
+        # - switch.vaatwasser_program_expresssparkle65
+        # - switch.vaatwasser_program_glasscare
+        - switch.vaatwasser_program_intensiv45
+        - switch.vaatwasser_program_intensiv70
+        - switch.vaatwasser_program_intensivpower
+        # - switch.vaatwasser_program_kurz60
+        - switch.vaatwasser_program_machinecare
+        # - switch.vaatwasser_program_magicdaily
+        - switch.vaatwasser_program_maximumcleaning
+        # - switch.vaatwasser_program_nightwash
+        - switch.vaatwasser_program_normal45
+        - switch.vaatwasser_program_normal65
+        - switch.vaatwasser_program_prerinse
+        - switch.vaatwasser_program_quick45
+        - switch.vaatwasser_program_quick65
+        - switch.vaatwasser_program_steamfresh
+        - switch.vaatwasser_program_super60
+        - sensor.vaatwasser_duration
+        - sensor.vaatwasser_operation_state
+        - sensor.vaatwasser_program_progress
+        - sensor.vaatwasser_remaining_program_time
+        - binary_sensor.vaatwasser_door
+        # - binary_sensor.vaatwasser_remote_control
+        # - binary_sensor.vaatwasser_remote_start

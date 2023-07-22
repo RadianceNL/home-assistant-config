@@ -1,0 +1,22 @@
+type: custom:multiple-entity-row
+entity: sensor.unifi_ac_pro_uptime
+tap_action: !include /config/views/cards/content/homelab/unifi/popups/ubiquiti-ac-pro-first-floor.yaml
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:access-point
+name: Unifi AC Pro
+show_state: false
+secondary_info:
+  entity: sensor.unifi_ac_pro_cpu_load
+  name: false
+entities:
+  - entity: sensor.unifi_ac_pro_total_clients
+    name: Tot. clients
+  - entity: sensor.unifi_ac_pro_uptime
+    name: Uptime

@@ -1,0 +1,15 @@
+type: picture-glance
+view_layout:
+  grid-area: personcard2
+title: Eliane
+image: /local/eliane.jpg
+state_filter:
+  not_home: grayscale(100%)
+entity: person.eliane
+entities:
+  - entity: device_tracker.eliane
+    show_state: true
+  - entity: sensor.s10_eliane_battery_level
+    show_state: true
+  - entity: binary_sensor.s10_eliane_is_charging
+    show_state: true

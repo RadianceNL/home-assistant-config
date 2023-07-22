@@ -1,0 +1,27 @@
+type: custom:multiple-entity-row
+entity: light.dimmer_slaapkamer
+tap_action:
+  action: toggle
+style:
+  hui-generic-entity-row:
+    $: |
+      @media only screen and (max-width: 600px) {
+        state-badge {
+          display: none !important;
+        }
+      }
+icon: mdi:bed
+name: Slaapkamer
+show_state: false
+secondary_info:
+  entity: sensor.aqara_slaapkamer_thermometer_temperature
+  name: false
+entities:
+  - entity: sensor.aqara_slaapkamer_thermometer_humidity
+    name: humidity
+  - entity: light.dimmer_slaapkamer
+    icon: mdi:ceiling-light-multiple
+    name: false
+    state_color: true
+    tap_action:
+      action: toggle

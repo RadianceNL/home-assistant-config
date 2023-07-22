@@ -1,0 +1,28 @@
+- sensor:
+    - name: date_formatted
+      state: >-
+        {% set days = ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'] %}
+        {% set months = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december']%}
+        {{ now().timestamp() | timestamp_custom(days[now().weekday()] ~ ' %-d ' ~ months[now().month-1]  ~ ' %Y' ) }}
+      icon: 'mdi:calendar-clock'
+
+    - name: weather_dutch
+      state: >-
+        {%- set state = states('weather.buienradar') -%}
+        {% if state == 'clear-night' %} Helder
+        {% elif state == 'cloudy' %} Bewolkt
+        {% elif state == 'exceptional' %} Weeralarm
+        {% elif state == 'fog' %} Mist
+        {% elif state == 'hail' %} Hagel
+        {% elif state == 'lightning' %} Onweer
+        {% elif state == 'lightning-rainy' %} Lichte regen
+        {% elif state == 'partlycloudy' %} Deels bewolkt
+        {% elif state == 'pouring' %} Zware regen
+        {% elif state == 'rainy' %} Regenachtig
+        {% elif state == 'snowy' %} Sneeuw
+        {% elif state == 'snowy-rainy' %} Natte sneeuw
+        {% elif state == 'sunny' %} Zonnig
+        {% elif state == 'windy' %} Wind
+        {% elif state == 'windy-variant' %} Storm
+        {% else %} Geen gegevens
+        {% endif %}

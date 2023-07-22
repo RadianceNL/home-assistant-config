@@ -1,0 +1,45 @@
+type: custom:auto-entities
+card:
+  type: glance
+  card_mod:
+    style: |
+      ha-card {
+        background: none;
+        box-shadow: none;
+      }
+  show_icon: true
+  show_name: false
+  state_color: true
+  show_state: true
+entities:
+  - entity: sensor.afvalinfo_thuis_gft
+    icon: phu:garbage-organic
+    card_mod:
+      style: |
+        state-badge {
+          {% if is_state_attr("sensor.afvalinfo_thuis_gft", "is_collection_date_today", true) -%}
+            color: rgb(0, 204, 102);
+          {% endif %}
+        }
+  - entity: sensor.afvalinfo_thuis_papier
+    icon: phu:garbage-cardboard
+    card_mod:
+      style: |
+        state-badge {
+          {% if is_state_attr("sensor.afvalinfo_thuis_papier", "is_collection_date_today", true) -%}
+            color: rgb(0, 161, 255)
+          {% endif %}
+        }
+  - entity: sensor.afvalinfo_thuis_restafval
+    icon: phu:garbage-residual
+    card_mod:
+      style: |
+        state-badge {
+          {% if is_state_attr("sensor.afvalinfo_thuis_restafval", "is_collection_date_today", true) -%}
+            color: rgb(252, 249, 249);
+          {% endif %}
+        }
+sort:
+  method: attribute
+  attribute: days_until_collection_date
+  numeric: true

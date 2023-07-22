@@ -1,0 +1,30 @@
+action: fire-dom-event
+browser_mod:
+  command: popup
+  title: Prusa MK3S Enclosure
+  card:
+    type: entities
+    card_mod:
+      style: |
+        ha-card {
+          --ha-card-background: rgb(0,0,0,0.5);
+          border-radius: 10px;
+        }
+    entities:
+      - type: "custom:slider-entity-row"
+        entity: light.wled_prusa_enclosure
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+        icon: mdi:printer-3d-nozzle
+        show_state: false
+
+      - type: "custom:slider-entity-row"
+        entity: light.wled_prusa_enclosure_bottom
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+        icon: mdi:border-bottom
+        show_state: false

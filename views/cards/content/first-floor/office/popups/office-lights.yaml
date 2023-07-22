@@ -1,0 +1,35 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Hobbykamer verlichting
+    content:
+      type: entities
+      entities:
+        - type: "custom:slider-entity-row"
+          entity: light.dimmer_hobbykamer
+          name: Dimmer
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          icon: mdi:led-off
+          show_state: false
+        - type: "custom:slider-entity-row"
+          entity: light.ha_group_hobbykamer_werkbank
+          name: Werkbank
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          icon: mdi:led-strip
+          show_state: false
+        - type: "custom:slider-entity-row"
+          entity: light.wled_prusa_enclosure
+          name: Prusa
+          tap_action:
+            action: toggle
+          hold_action:
+            action: more-info
+          icon: mdi:led-off
+          show_state: false
